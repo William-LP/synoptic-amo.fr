@@ -109,11 +109,10 @@ export default function Hero() {
                   delay: 0.3 + i * 0.1,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className={`inline-block mr-4 ${
-                  part.highlight
-                    ? "text-transparent bg-clip-text bg-linear-to-r from-[#4ECDC4] to-[#00A099]"
-                    : ""
-                }`}
+                className={`inline-block mr-4 ${part.highlight
+                  ? "text-transparent bg-clip-text bg-linear-to-r from-[#4ECDC4] to-[#00A099]"
+                  : ""
+                  }`}
                 style={{ perspective: "600px" }}
               >
                 {part.text}
@@ -155,10 +154,10 @@ export default function Hero() {
             <ArrowRight size={18} />
           </a>
           <a
-            href="#missions"
+            href="#references"
             className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white font-medium rounded-full hover:bg-white/10 transition-all backdrop-blur-sm"
           >
-            Nos missions
+            Nos références
           </a>
         </motion.div>
 
@@ -214,11 +213,10 @@ export default function Hero() {
             key={i}
             onClick={() => { setCurrent(i); setPaused(true); }}
             aria-label={`Slide ${i + 1}`}
-            className={`rounded-full transition-all duration-300 ${
-              i === current
-                ? "bg-white w-6 h-2"
-                : "bg-white/40 hover:bg-white/70 w-2 h-2"
-            }`}
+            className={`rounded-full transition-all duration-300 ${i === current
+              ? "bg-white w-6 h-2"
+              : "bg-white/40 hover:bg-white/70 w-2 h-2"
+              }`}
           />
         ))}
       </div>
