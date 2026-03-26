@@ -152,21 +152,6 @@ export default function References() {
               construction et d&apos;aménagement.
             </motion.p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={clientsInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center mb-12"
-          >
-            <div className="inline-flex items-baseline gap-2 px-8 py-4 bg-white rounded-2xl border border-slate-100 shadow-sm">
-              <span className="text-5xl font-bold text-[#00A099]">50</span>
-              <span className="text-slate-400 font-medium">+</span>
-              <span className="text-slate-500 text-sm ml-1">
-                clients &amp; organismes accompagnés
-              </span>
-            </div>
-          </motion.div>
         </div>
 
         {/* Marquee rows — full bleed */}
