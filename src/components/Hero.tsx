@@ -148,28 +148,6 @@ export default function Hero() {
             Nos références
           </a>
         </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto"
-        >
-          {[
-            { value: "50+", label: "Clients accompagnés" },
-            { value: "2", label: "Agences en France" },
-            { value: "5", label: "Phases couvertes" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl px-5 py-4 text-center hover:bg-white/15 transition-colors"
-            >
-              <div className="text-3xl font-bold text-white mb-0.5">{stat.value}</div>
-              <div className="text-xs text-white/60">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* ── Carousel controls ── */}

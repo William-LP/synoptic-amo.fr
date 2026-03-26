@@ -59,7 +59,7 @@ function LogoCard({ file }: { file: string }) {
         width={0}
         height={0}
         sizes="120px"
-        className="w-full h-auto max-h-14 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+        className="w-full h-auto max-h-14 object-contain transition-all duration-300 opacity-75 hover:opacity-100"
         unoptimized
       />
     </div>

@@ -10,8 +10,7 @@ const links = [
   { label: "Accueil", href: "#accueil" },
   { label: "Missions", href: "#missions" },
   { label: "Équipe", href: "#equipe" },
-  { label: "Références", href: "#references" },
-  { label: "Contact", href: "#contact" },
+  { label: "Références", href: "#references" }
 ];
 
 export default function Navbar() {
@@ -26,11 +25,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/92 backdrop-blur-md shadow-sm border-b border-slate-100"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-white/92 backdrop-blur-md shadow-sm border-b border-slate-100"
+        : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -41,9 +39,8 @@ export default function Navbar() {
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/logo.png`}
                 alt="SYNOPTIC AMO"
                 fill
-                className={`object-contain object-left transition-all duration-300 ${
-                  scrolled ? "" : "brightness-0 invert"
-                }`}
+                className={`object-contain object-left transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"
+                  }`}
                 sizes="112px"
                 priority
               />
@@ -56,9 +53,8 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className={`text-sm font-medium transition-colors hover:text-[#00A099] ${
-                  scrolled ? "text-slate-600" : "text-white/80"
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-[#00A099] ${scrolled ? "text-slate-600" : "text-white/80"
+                  }`}
               >
                 {l.label}
               </a>
@@ -67,10 +63,10 @@ export default function Navbar() {
               href="https://www.linkedin.com/company/synoptic-amo"
               target="_blank"
               rel="noopener noreferrer"
-              className={`transition-colors hover:text-[#00A099] ${scrolled ? "text-slate-500" : "text-white/70"}`}
+              className="w-8 h-8 rounded-lg bg-[#134A64] transition-colors flex items-center justify-center shrink-0"
               aria-label="LinkedIn"
             >
-              <LinkedinIcon size={17} />
+              <span className="text-white"><LinkedinIcon size={15} /></span>
             </a>
             <a
               href="#contact"
@@ -82,9 +78,8 @@ export default function Navbar() {
 
           {/* Mobile button */}
           <button
-            className={`lg:hidden p-2 rounded-lg transition-colors ${
-              scrolled ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
-            }`}
+            className={`lg:hidden p-2 rounded-lg transition-colors ${scrolled ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
+              }`}
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >
