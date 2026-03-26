@@ -73,17 +73,6 @@ export default function Hero() {
 
       {/* ── Hero content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center w-full">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-sm font-medium mb-8"
-        >
-          <span className="w-2 h-2 rounded-full bg-[#4ECDC4] animate-pulse" />
-          Assistance à Maîtrise d&apos;Ouvrage
-        </motion.div>
-
         {/* Headline — word-by-word reveal */}
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-4 tracking-tight">
           <span className="block">
