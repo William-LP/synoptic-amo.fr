@@ -8,6 +8,31 @@ import LinkedinIcon from "./LinkedinIcon";
 import { stagger, fadeInUp, fadeInLeft, springCard } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
 
+const PARTNERS = [
+  "GEVOLYS.png", "TERRE-ECO.png", "Synapse-768x192.jpg", "oe.png",
+  "LOGO_KALEIDO-WEB-2-768x148.jpg", "inddigo.jpg", "ICAMO.png", "ESSOR.png",
+  "EODD.png", "EA-768x515.png", "AXONE.png", "AUXILIUM.png", "ARBRE.jpg",
+  "artelia.jpg", "Amoes.png", "A2CSPORTS-768x270.png", "2OINGENIERE-768x325.png",
+  "Alphaico-768x342.jpg", "BETEM.jpg", "dpgco-768x421.jpg", "magma-768x564.jpg",
+];
+
+function PartnerLogo({ file }: { file: string }) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  return (
+    <div className="shrink-0 w-32 h-16 mx-4 flex items-center justify-center">
+      <Image
+        src={`${basePath}/img/partners/${file}`}
+        alt=""
+        width={0}
+        height={0}
+        sizes="128px"
+        className="w-full h-auto max-h-12 object-contain transition-all duration-300 opacity-75 hover:opacity-100"
+        unoptimized
+      />
+    </div>
+  );
+}
+
 const members = [
   {
     name: "Gilles CERTAIN",
@@ -229,8 +254,24 @@ export default function Team() {
         </div>
       </div>
 
+      {/* Partners carousel */}
+      <div className="mt-20 border-t border-slate-100 pt-14">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Nos partenaires</p>
+        </div>
+        <div className="relative overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
+          <div className="flex animate-marquee" style={{ animationDuration: "30s" }}>
+            {[...PARTNERS, ...PARTNERS].map((file, i) => (
+              <PartnerLogo key={i} file={file} />
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Wave to light bg (Map section) */}
-      <div className="mt-20">
+      <div className="mt-14">
         <WaveDivider fillColor="#f7f9fc" flip />
       </div>
     </section>
