@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { stagger, fadeInUp } from "@/lib/animations";
@@ -19,56 +20,47 @@ const MapClient = dynamic(() => import("./MapClient"), {
   ),
 });
 
-/* ── Client list ── */
-function getInitials(name: string): string {
-  const words = name
-    .replace(/^(Ville de|Ville d'|CC |Grand |Agglomération |Métropole de|Conseil |CCAS de|Région |Loire )/i, "")
-    .trim()
-    .split(/\s+/);
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-  return (words[0][0] + words[1][0]).toUpperCase();
-}
-
-const AVATAR_PALETTE = [
-  "#00A099", "#124761", "#3d7ebf", "#7b5ea7",
-  "#3da05a", "#c4a227", "#b84f4f", "#e07b39",
-  "#2a9a8f", "#4f75b8",
-];
-function getAvatarColor(name: string): string {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  return AVATAR_PALETTE[hash % AVATAR_PALETTE.length];
-}
-
-const clients = [
-  "Ville de Lyon", "Ville de Grenoble", "Annecy Agglo", "Chambéry Métropole",
-  "Grand Annecy", "Métropole de Lyon", "Savoie Technolac", "Ville de Bron",
-  "Ville de Villeurbanne", "Conseil Régional AuRA", "Ville d'Annemasse",
-  "CC du Genevois", "Ville de Thonon-les-Bains", "Agglomération Annecy",
-  "SDIS 73", "Haute-Savoie", "Savoie Mont Blanc", "Ville de Bonneville",
-  "CC Fier et Usses", "Ville de Rumilly", "Grand Chambéry",
-  "Bourg-en-Bresse Agglomération", "Ain Agglomération", "CC Pays du Gier",
-  "Ville de Roanne", "Loire Forez Agglomération", "Ville de Firminy",
-  "CC Vals du Dauphiné", "CCAS de Grenoble", "Ville de Voiron",
-  "Grenoble Alpes Métropole", "Ville de Bourgoin-Jallieu",
+/* ── Client logos ── */
+const LOGOS = [
+  "xl_media_image9.png", "xl_media_image10.png", "xl_media_image12.png",
+  "xl_media_image13.png", "xl_media_image14.png", "xl_media_image15.png",
+  "xl_media_image16.png", "xl_media_image17.png", "xl_media_image18.png",
+  "xl_media_image19.png", "xl_media_image20.png", "xl_media_image21.png",
+  "xl_media_image23.jpeg", "xl_media_image25.png", "xl_media_image26.png",
+  "xl_media_image28.png", "xl_media_image29.jpeg", "xl_media_image30.jpeg",
+  "xl_media_image31.png", "xl_media_image32.png", "xl_media_image33.jpeg",
+  "xl_media_image42.png", "xl_media_image43.png", "xl_media_image44.png",
+  "xl_media_image45.png", "xl_media_image46.gif", "xl_media_image47.jpeg",
+  "xl_media_image48.png", "xl_media_image49.png", "xl_media_image50.jpeg",
+  "xl_media_image51.jpeg", "xl_media_image61.png", "xl_media_image67.png",
+  "xl_media_image87.png", "xl_media_image96.png", "xl_media_image97.png",
+  "xl_media_image98.png", "xl_media_image103.png", "xl_media_image105.png",
+  "xl_media_image106.png", "xl_media_image107.png", "xl_media_image108.png",
+  "xl_media_image113.png", "xl_media_image115.png", "xl_media_image116.png",
+  "xl_media_image117.png", "xl_media_image119.png", "xl_media_image120.png",
+  "xl_media_image121.png", "xl_media_image122.png", "xl_media_image123.png",
+  "xl_media_image124.png", "xl_media_image125.jpeg", "xl_media_image126.png",
+  "xl_media_image132.png", "xl_media_image133.jpeg", "xl_media_image135.png",
+  "xl_media_image136.png", "xl_media_image137.png",
+  "Ministere_de_lEconomie_des_Finances_et_de_la_Souverainete_industrielle_et_numerique.svg-1024x622.png",
 ];
 
-const track1 = [...clients.slice(0, 16), ...clients.slice(0, 16)];
-const track2 = [...clients.slice(16), ...clients.slice(16)];
+const half = Math.ceil(LOGOS.length / 2);
+const track1 = [...LOGOS.slice(0, half), ...LOGOS.slice(0, half)];
+const track2 = [...LOGOS.slice(half), ...LOGOS.slice(half)];
 
-function ClientChip({ name }: { name: string }) {
-  const color = getAvatarColor(name);
+function LogoCard({ file }: { file: string }) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
-    <div className="shrink-0 flex items-center gap-2.5 px-4 py-2 bg-white border border-slate-100 rounded-xl whitespace-nowrap hover:border-[#00A099]/30 hover:shadow-sm transition-all cursor-default group">
-      <div
-        className="w-6 h-6 rounded-lg flex items-center justify-center text-white font-bold shrink-0 text-[10px]"
-        style={{ background: color }}
-      >
-        {getInitials(name)}
-      </div>
-      <span className="text-sm text-slate-600 font-medium group-hover:text-[#124761] transition-colors">
-        {name}
-      </span>
+    <div className="shrink-0 w-36 h-20 mx-3 flex items-center justify-center bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-[#00A099]/30 transition-all p-3">
+      <Image
+        src={`${basePath}/img/logos/${file}`}
+        alt=""
+        width={120}
+        height={56}
+        className="object-contain max-h-14 w-full grayscale hover:grayscale-0 transition-all duration-300"
+        unoptimized
+      />
     </div>
   );
 }
@@ -156,24 +148,24 @@ export default function References() {
 
         {/* Marquee rows — full bleed */}
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
 
-          <div className="flex overflow-hidden mb-3">
-            <div className="animate-marquee flex gap-3 shrink-0">
-              {track1.map((name, i) => (
-                <ClientChip key={`r1-${i}`} name={name} />
+          <div className="flex overflow-hidden mb-4">
+            <div className="animate-marquee flex shrink-0" style={{ animationDuration: "45s" }}>
+              {track1.map((file, i) => (
+                <LogoCard key={`r1-${i}`} file={file} />
               ))}
             </div>
           </div>
 
           <div className="flex overflow-hidden">
             <div
-              className="animate-marquee flex gap-3 shrink-0"
-              style={{ animationDirection: "reverse", animationDuration: "35s" }}
+              className="animate-marquee flex shrink-0"
+              style={{ animationDirection: "reverse", animationDuration: "50s" }}
             >
-              {track2.map((name, i) => (
-                <ClientChip key={`r2-${i}`} name={name} />
+              {track2.map((file, i) => (
+                <LogoCard key={`r2-${i}`} file={file} />
               ))}
             </div>
           </div>
