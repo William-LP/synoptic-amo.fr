@@ -105,13 +105,13 @@ function TimelineStep({
       </div>
 
       {/* Row: alternating content / image */}
-      <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
         {/* Content block */}
         <motion.div
           variants={springSlide(isEven ? "left" : "right")}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className={`${isEven ? "md:col-start-1" : "md:col-start-2 md:row-start-1"} ${isEven ? "md:pr-12" : "md:pl-12"}`}
+          className={`${isEven ? "md:col-start-1" : "md:col-start-2 md:row-start-1"} ${isEven ? "md:pr-6" : "md:pl-6"}`}
         >
           {/* Mobile step number */}
           <div className="flex items-center gap-3 mb-4 md:hidden">
@@ -252,7 +252,7 @@ export default function Missions() {
         </motion.div>
 
         {/* Timeline */}
-        <div ref={containerRef} className="relative max-w-5xl mx-auto">
+        <div ref={containerRef} className="relative max-w-3xl mx-auto">
           {/* Static gray baseline */}
           <div className="absolute hidden md:block left-1/2 top-6 bottom-6 w-px bg-slate-200 -translate-x-1/2" />
           {/* Animated teal fill */}

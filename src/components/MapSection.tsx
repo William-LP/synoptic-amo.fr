@@ -56,9 +56,10 @@ function LogoCard({ file }: { file: string }) {
       <Image
         src={`${basePath}/img/logos/${file}`}
         alt=""
-        width={120}
-        height={56}
-        className="object-contain max-h-14 w-full grayscale hover:grayscale-0 transition-all duration-300"
+        width={0}
+        height={0}
+        sizes="120px"
+        className="w-full h-auto max-h-14 object-contain grayscale hover:grayscale-0 transition-all duration-300"
         unoptimized
       />
     </div>
@@ -113,7 +114,7 @@ export default function References() {
       </div>
 
       {/* ── Clients part ── */}
-      <div className="mt-20 bg-[#f7f9fc] pt-16 pb-0 overflow-hidden">
+      <div className="relative mt-20 bg-[#f7f9fc] pt-16 pb-0 overflow-hidden">
         {/* Blob accent */}
         <div
           className="absolute bottom-0 right-0 w-96 h-96 bg-[#00A099]/6 blur-3xl pointer-events-none"
