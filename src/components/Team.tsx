@@ -272,7 +272,7 @@ export default function Team() {
 
       {/* Wave to light bg (Map section) */}
       <div className="mt-14">
-        <WaveDivider fillColor="#f7f9fc" flip />
+        <WaveDivider fillColor="#f7f9fc" bgColor="white" />
       </div>
     </section>
   );

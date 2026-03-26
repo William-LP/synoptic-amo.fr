@@ -177,7 +177,7 @@ export default function Contact() {
 
       {/* Wave to footer (dark bg) */}
       <div className="mt-20">
-        <WaveDivider fillColor="#124761" />
+        <WaveDivider fillColor="#124761" bgColor="white" />
       </div>
     </section>
   );

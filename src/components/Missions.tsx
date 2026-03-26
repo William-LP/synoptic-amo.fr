@@ -16,7 +16,7 @@ import {
   Scale,
   ScanEye,
 } from "lucide-react";
-import { fadeInUp, stagger, springSlide } from "@/lib/animations";
+import { fadeInUp, stagger } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
 
 const STEPS: {
@@ -25,7 +25,6 @@ const STEPS: {
   subtitle: string;
   description: string;
   icon: LucideIcon;
-  gradient: string;
   iconBg: string;
   decorColor: string;
 }[] = [
@@ -34,9 +33,8 @@ const STEPS: {
     title: "Consultation des usagers",
     subtitle: "Définition des besoins",
     description:
-      "Analyse des usages, dimensionnement et planification opérationnelle. Nous recueillons vos besoins réels, rencontrons les usagers et construisons un programme adapté à votre contexte.",
+      "Analyse des usages, dimensionnement et planification opérationnelle. Nous recueillons vos besoins réels et construisons un programme adapté à votre contexte.",
     icon: Users,
-    gradient: "from-[#e6f7f6] to-[#c8eeec]",
     iconBg: "bg-[#00A099]/15",
     decorColor: "#00A099",
   },
@@ -45,9 +43,8 @@ const STEPS: {
     title: "Étude de faisabilité",
     subtitle: "Analyse et opportunité",
     description:
-      "Évaluation de la faisabilité technique, économique et réglementaire de votre opération pour sécuriser les décisions stratégiques avant tout engagement.",
+      "Évaluation de la faisabilité technique, économique et réglementaire pour sécuriser les décisions stratégiques avant tout engagement.",
     icon: SearchCheck,
-    gradient: "from-[#e8f0f5] to-[#ccdde8]",
     iconBg: "bg-[#124761]/10",
     decorColor: "#124761",
   },
@@ -56,9 +53,8 @@ const STEPS: {
     title: "Programmation fonctionnelle & technique",
     subtitle: "Rédaction du programme",
     description:
-      "Élaboration du programme fonctionnel et technique détaillé — socle indispensable pour le dialogue avec les équipes de maîtrise d'œuvre et garant de la conformité du projet.",
+      "Élaboration du programme fonctionnel et technique détaillé — socle indispensable pour le dialogue avec les équipes de maîtrise d'œuvre.",
     icon: BookOpen,
-    gradient: "from-[#e6f7f6] to-[#c8eeec]",
     iconBg: "bg-[#00A099]/15",
     decorColor: "#00A099",
   },
@@ -67,9 +63,8 @@ const STEPS: {
     title: "Sélection de la maîtrise d'œuvre",
     subtitle: "Procédures marchés publics",
     description:
-      "Accompagnement dans les procédures de commande publique : rédaction des avis, analyse des candidatures et accompagnement du jury pour sélectionner les meilleures équipes.",
+      "Accompagnement dans les procédures de commande publique : rédaction des avis, analyse des candidatures et accompagnement du jury.",
     icon: Scale,
-    gradient: "from-[#e8f0f5] to-[#ccdde8]",
     iconBg: "bg-[#124761]/10",
     decorColor: "#124761",
   },
@@ -78,119 +73,83 @@ const STEPS: {
     title: "Suivi du projet en phase conception",
     subtitle: "Expertise & veille programme",
     description:
-      "Vérification de la conformité au programme à chaque jalon des études, expertise technique et accompagnement jusqu'à la livraison de l'ouvrage.",
+      "Vérification de la conformité au programme à chaque jalon des études, expertise technique et accompagnement jusqu'à la livraison.",
     icon: ScanEye,
-    gradient: "from-[#e6f7f6] to-[#c8eeec]",
     iconBg: "bg-[#00A099]/15",
     decorColor: "#00A099",
   },
 ];
 
-function TimelineStep({
+function StepCard({
   step,
+  position,
   index,
 }: {
   step: (typeof STEPS)[0];
+  position: "above" | "below";
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const isEven = index % 2 === 0;
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <div ref={ref} className="relative mb-20 last:mb-0">
-      {/* Circle on the line */}
-      <div className="hidden md:flex absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1 w-12 h-12 rounded-full bg-[#00A099] text-white items-center justify-center font-bold text-sm shadow-lg shadow-[#00A099]/30 z-10 border-4 border-white">
-        {step.num}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: position === "above" ? -20 : 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center text-center"
+    >
+      {/* Connector line */}
+      {position === "above" && <div className="w-px h-16 bg-slate-200 mb-2" />}
+
+      {/* Card */}
+      <div className="bg-white rounded-2xl shadow-md shadow-slate-200/80 border border-slate-100 p-4 w-full">
+        <div
+          className={`w-12 h-12 rounded-xl ${step.iconBg} flex items-center justify-center mb-3 mx-auto`}
+        >
+          <step.icon size={24} strokeWidth={1.4} style={{ color: step.decorColor }} />
+        </div>
+        <p
+          className="text-[10px] font-bold uppercase tracking-widest mb-1.5"
+          style={{ color: step.decorColor }}
+        >
+          {step.subtitle}
+        </p>
+        <h3 className="text-sm font-bold text-[#124761] mb-2 leading-snug">{step.title}</h3>
+        <p className="text-xs text-slate-500 leading-relaxed">{step.description}</p>
       </div>
 
-      {/* Row: alternating content / image */}
-      <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
-        {/* Content block */}
-        <motion.div
-          variants={springSlide(isEven ? "left" : "right")}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className={`${isEven ? "md:col-start-1" : "md:col-start-2 md:row-start-1"} ${isEven ? "md:pr-6" : "md:pl-6"}`}
-        >
-          {/* Mobile step number */}
-          <div className="flex items-center gap-3 mb-4 md:hidden">
-            <div className="w-10 h-10 rounded-full bg-[#00A099] text-white flex items-center justify-center font-bold text-sm shrink-0">
-              {step.num}
-            </div>
-            <span className="text-xs font-semibold text-[#00A099] uppercase tracking-widest">
-              {step.subtitle}
-            </span>
-          </div>
+      {position === "below" && <div className="w-px h-16 bg-slate-200 mt-2" />}
+    </motion.div>
+  );
+}
 
-          <span className="hidden md:inline-block text-xs font-semibold text-[#00A099] uppercase tracking-widest mb-2">
-            {step.subtitle}
-          </span>
-          <h3 className="text-xl lg:text-2xl font-bold text-[#124761] mb-3 leading-snug">
-            {step.title}
-          </h3>
-          <p className="text-slate-500 leading-relaxed text-sm lg:text-base">
-            {step.description}
-          </p>
-        </motion.div>
-
-        {/* Icon card */}
-        <motion.div
-          variants={springSlide(isEven ? "right" : "left")}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className={`${isEven ? "md:col-start-2 md:row-start-1" : "md:col-start-1 md:row-start-1"}`}
-        >
-          <div
-            className={`relative aspect-4/3 rounded-3xl overflow-hidden shadow-lg shadow-slate-200/80 bg-linear-to-br ${step.gradient} flex items-center justify-center group`}
-          >
-            {/* Decorative rings */}
-            <div
-              className="absolute w-64 h-64 rounded-full border-2 opacity-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ borderColor: step.decorColor }}
-            />
-            <div
-              className="absolute w-44 h-44 rounded-full border opacity-25 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ borderColor: step.decorColor }}
-            />
-            {/* Floating dots */}
-            <div
-              className="absolute w-3 h-3 rounded-full opacity-30 top-8 right-10"
-              style={{ background: step.decorColor }}
-            />
-            <div
-              className="absolute w-2 h-2 rounded-full opacity-20 bottom-10 left-12"
-              style={{ background: step.decorColor }}
-            />
-            <div
-              className="absolute w-4 h-4 rounded-full opacity-15 top-16 left-8"
-              style={{ background: step.decorColor }}
-            />
-
-            {/* Step number — faint background */}
-            <span
-              className="absolute right-6 bottom-4 text-8xl font-bold opacity-8 select-none leading-none"
-              style={{ color: step.decorColor }}
-            >
-              {step.num}
-            </span>
-
-            {/* Icon */}
-            <motion.div
-              whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`relative z-10 w-24 h-24 rounded-3xl ${step.iconBg} flex items-center justify-center shadow-sm`}
-            >
-              <step.icon
-                size={44}
-                strokeWidth={1.4}
-                style={{ color: step.decorColor }}
-              />
-            </motion.div>
-          </div>
-        </motion.div>
+function MobileStep({ step, index, isLast }: { step: (typeof STEPS)[0]; index: number; isLast: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -16 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      className="flex gap-4"
+    >
+      <div className="flex flex-col items-center">
+        <div className="w-10 h-10 rounded-full bg-[#00A099] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-md shadow-[#00A099]/30">
+          {step.num}
+        </div>
+        {!isLast && <div className="w-px flex-1 bg-slate-200 mt-2" />}
       </div>
-    </div>
+      <div className="pb-6">
+        <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: step.decorColor }}>
+          {step.subtitle}
+        </p>
+        <h3 className="text-base font-bold text-[#124761] mb-1.5 leading-snug">{step.title}</h3>
+        <p className="text-sm text-slate-500 leading-relaxed">{step.description}</p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -200,17 +159,15 @@ export default function Missions() {
   const titleRef = useRef<HTMLDivElement>(null);
   const titleInView = useInView(titleRef, { once: true });
 
-  /* Parallax on section title */
   const { scrollYProgress: titleScroll } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
   const titleY = useTransform(titleScroll, [0, 1], [-12, 12]);
 
-  /* Animated center line */
   const { scrollYProgress: lineProgress } = useScroll({
     target: containerRef,
-    offset: ["start 80%", "end 20%"],
+    offset: ["start 70%", "end 30%"],
   });
 
   return (
@@ -251,18 +208,52 @@ export default function Missions() {
           </motion.p>
         </motion.div>
 
-        {/* Timeline */}
-        <div ref={containerRef} className="relative max-w-3xl mx-auto">
-          {/* Static gray baseline */}
-          <div className="absolute hidden md:block left-1/2 top-6 bottom-6 w-px bg-slate-200 -translate-x-1/2" />
-          {/* Animated teal fill */}
-          <motion.div
-            className="absolute hidden md:block left-1/2 top-6 w-0.5 bg-[#00A099] origin-top -translate-x-1/2 rounded-full"
-            style={{ scaleY: lineProgress, height: "calc(100% - 3rem)" }}
-          />
+        {/* ── Horizontal timeline (desktop) ── */}
+        <div ref={containerRef} className="hidden lg:block">
+          {/* Top row — odd steps (0, 2, 4) */}
+          <div className="grid grid-cols-5 items-end">
+            {STEPS.map((step, i) =>
+              i % 2 === 0
+                ? <StepCard key={step.num} step={step} position="above" index={i} />
+                : <div key={step.num} />
+            )}
+          </div>
 
+          {/* Line + circles */}
+          <div className="relative flex items-center my-1">
+            {/* Gray baseline */}
+            <div className="absolute inset-x-0 top-1/2 h-px bg-slate-200 -translate-y-px" />
+            {/* Animated teal fill */}
+            <motion.div
+              className="absolute left-0 top-1/2 h-0.5 bg-[#00A099] -translate-y-px origin-left rounded-full"
+              style={{ scaleX: lineProgress, width: "100%" }}
+            />
+            {/* Circles */}
+            <div className="grid grid-cols-5 w-full relative z-10">
+              {STEPS.map((step) => (
+                <div key={step.num} className="flex justify-center">
+                  <div className="w-11 h-11 rounded-full bg-[#00A099] text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-[#00A099]/30 border-4 border-[#f7f9fc]">
+                    {step.num}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom row — even steps (1, 3) */}
+          <div className="grid grid-cols-5 items-start">
+            {STEPS.map((step, i) =>
+              i % 2 !== 0
+                ? <StepCard key={step.num} step={step} position="below" index={i} />
+                : <div key={step.num} />
+            )}
+          </div>
+        </div>
+
+        {/* ── Vertical fallback (mobile) ── */}
+        <div className="lg:hidden space-y-8">
           {STEPS.map((step, i) => (
-            <TimelineStep key={step.num} step={step} index={i} />
+            <MobileStep key={step.num} step={step} index={i} isLast={i === STEPS.length - 1} />
           ))}
         </div>
 
@@ -272,7 +263,7 @@ export default function Missions() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 max-w-xl mx-auto bg-linear-to-br from-[#00A099] to-[#00bfb8] rounded-3xl p-8 text-white text-center shadow-xl shadow-[#00A099]/20"
+          className="mt-16 max-w-xl mx-auto bg-linear-to-br from-[#00A099] to-[#00bfb8] rounded-3xl p-8 text-white text-center shadow-xl shadow-[#00A099]/20"
         >
           <h3 className="font-bold text-xl mb-2">Un projet en tête ?</h3>
           <p className="text-white/75 text-sm mb-6 leading-relaxed">
@@ -291,7 +282,7 @@ export default function Missions() {
 
       {/* Wave to white (Team section) */}
       <div className="mt-20">
-        <WaveDivider fillColor="white" />
+        <WaveDivider fillColor="white" bgColor="#f7f9fc" />
       </div>
     </section>
   );

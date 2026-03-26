@@ -73,7 +73,7 @@ export default function References() {
   const clientsInView = useInView(clientsRef, { once: true });
 
   return (
-    <section id="references" className="relative bg-white pb-0 pt-24 lg:pt-32">
+    <section id="references" className="relative bg-[#f7f9fc] pb-0 pt-24 lg:pt-32">
       {/* Blob accent */}
       <div
         className="absolute top-0 -left-24 w-[400px] h-[400px] bg-[#124761]/4 blur-3xl pointer-events-none"
@@ -173,7 +173,7 @@ export default function References() {
         </div>
 
         <div className="mt-16">
-          <WaveDivider fillColor="white" flip />
+          <WaveDivider fillColor="white" bgColor="#f7f9fc" />
         </div>
       </div>
     </section>
