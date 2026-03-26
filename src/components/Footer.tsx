@@ -55,7 +55,6 @@ export default function Footer() {
                 { label: "Accueil", href: "#accueil" },
                 { label: "Nos missions", href: "#missions" },
                 { label: "Notre équipe", href: "#equipe" },
-                { label: "Carte des références", href: "#carte" },
                 { label: "Références", href: "#references" },
                 { label: "Contact", href: "#contact" },
               ].map((l) => (

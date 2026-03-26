@@ -10,7 +10,6 @@ const links = [
   { label: "Accueil", href: "#accueil" },
   { label: "Missions", href: "#missions" },
   { label: "Équipe", href: "#equipe" },
-  { label: "Carte", href: "#carte" },
   { label: "Références", href: "#references" },
   { label: "Contact", href: "#contact" },
 ];
