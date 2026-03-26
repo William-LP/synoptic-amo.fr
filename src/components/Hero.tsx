@@ -15,18 +15,6 @@ const SLIDES = [
     src: "/img/image001.jpg",
     alt: "Équipement public réalisé avec l'accompagnement SYNOPTIC AMO",
   },
-  {
-    src: "/img/mission-1.jpg",
-    alt: "Consultation des usagers",
-  },
-  {
-    src: "/img/mission-3.jpg",
-    alt: "Programmation fonctionnelle et technique",
-  },
-  {
-    src: "/img/mission-5.jpg",
-    alt: "Suivi de la phase conception",
-  },
 ];
 
 const HEADLINE_PARTS = [
