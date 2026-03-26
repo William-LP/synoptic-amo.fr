@@ -47,7 +47,7 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
       {/* City hero image */}
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={office.heroImage}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${office.heroImage}`}
           alt={office.city}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"

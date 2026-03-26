@@ -66,7 +66,7 @@ export default function Hero() {
             className="absolute inset-0"
           >
             <Image
-              src={SLIDES[current].src}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${SLIDES[current].src}`}
               alt={SLIDES[current].alt}
               fill
               priority={current === 0}

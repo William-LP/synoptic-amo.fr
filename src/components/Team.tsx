@@ -76,7 +76,7 @@ function TeamCard({
         {/* Photo */}
         <div className="absolute bottom-0 right-6 w-36 h-44 overflow-hidden rounded-t-2xl">
           <Image
-            src={member.photo}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${member.photo}`}
             alt={member.name}
             fill
             className="object-cover object-top"
