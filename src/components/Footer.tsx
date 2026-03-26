@@ -14,7 +14,7 @@ export default function Footer() {
           <div>
             <div className="relative w-36 h-10 mb-4">
               <Image
-                src="/images/logo.png"
+                src="/img/logo.png"
                 alt="SYNOPTIC AMO"
                 fill
                 className="object-contain object-left brightness-0 invert"

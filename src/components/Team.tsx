@@ -17,7 +17,7 @@ const members = [
     address: "105 rue du 4 août 1789, 69100 Villeurbanne",
     email: "gilles.certain@synoptic-amo.fr",
     phone: "07 69 29 44 15",
-    photo: "/images/photo-gilles.jpg",
+    photo: "/img/photo-gilles.jpg",
     experience: "19 ans d'expérience en programmation",
     specialty: "Équipements publics (600+ projets réalisés)",
     career: [
@@ -36,7 +36,7 @@ const members = [
     address: "334 rue Nicolas Parent, 73000 Chambéry",
     email: "marion.bauvent@synoptic-amo.fr",
     phone: "07 69 79 83 20",
-    photo: "/images/photo-marion.jpg",
+    photo: "/img/photo-marion.jpg",
     experience: "10 ans d'expérience",
     specialty: "Expertise fonctionnelle, technique & réglementaire",
     career: [

@@ -8,23 +8,23 @@ import WaveDivider from "./WaveDivider";
 
 const SLIDES = [
   {
-    src: "/images/image002.jpg",
+    src: "/img/image002.jpg",
     alt: "Projet de construction accompagné par SYNOPTIC AMO",
   },
   {
-    src: "/images/image001.jpg",
+    src: "/img/image001.jpg",
     alt: "Équipement public réalisé avec l'accompagnement SYNOPTIC AMO",
   },
   {
-    src: "/images/mission-1.jpg",
+    src: "/img/mission-1.jpg",
     alt: "Consultation des usagers",
   },
   {
-    src: "/images/mission-3.jpg",
+    src: "/img/mission-3.jpg",
     alt: "Programmation fonctionnelle et technique",
   },
   {
-    src: "/images/mission-5.jpg",
+    src: "/img/mission-5.jpg",
     alt: "Suivi de la phase conception",
   },
 ];

@@ -39,7 +39,7 @@ export default function Navbar() {
           <a href="#accueil" className="flex items-center gap-2.5 group">
             <div className="relative w-28 h-8 transition-opacity group-hover:opacity-80">
               <Image
-                src="/images/logo.png"
+                src="/img/logo.png"
                 alt="SYNOPTIC AMO"
                 fill
                 className={`object-contain object-left transition-all duration-300 ${

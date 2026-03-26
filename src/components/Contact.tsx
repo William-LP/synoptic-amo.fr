@@ -16,7 +16,7 @@ const offices = [
     email: "gilles.certain@synoptic-amo.fr",
     phone: "07 69 29 44 15",
     mapUrl: "https://maps.google.com/?q=105+rue+du+4+aout+1789+69100+Villeurbanne",
-    heroImage: "/images/lyon.jpg",
+    heroImage: "/img/lyon.jpg",
     index: 0,
   },
   {
@@ -27,7 +27,7 @@ const offices = [
     email: "marion.bauvent@synoptic-amo.fr",
     phone: "07 69 79 83 20",
     mapUrl: "https://maps.google.com/?q=334+rue+Nicolas+Parent+73000+Chambery",
-    heroImage: "/images/chambery.jpg",
+    heroImage: "/img/chambery.jpg",
     index: 1,
   },
 ];
