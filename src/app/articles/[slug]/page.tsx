@@ -8,6 +8,7 @@ import Link from "next/link";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
+  if (articles.length === 0) return [{ slug: "_" }];
   return articles.map((a) => ({ slug: a.slug }));
 }
 
