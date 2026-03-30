@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import LinkedinIcon from "./LinkedinIcon";
@@ -38,7 +39,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative w-28 h-8 transition-opacity group-hover:opacity-80">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/logo.png`}
@@ -50,19 +51,19 @@ export default function Navbar() {
                 priority
               />
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 className={`text-sm font-medium transition-colors hover:text-[#00A099] ${solid ? "text-slate-600" : "text-white/80"
                   }`}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
             <a
               href="https://www.linkedin.com/company/synoptic-amo"
@@ -73,12 +74,12 @@ export default function Navbar() {
             >
               <span className="text-white"><LinkedinIcon size={15} /></span>
             </a>
-            <a
+            <Link
               href="/#contact"
               className="ml-1 px-5 py-2 bg-[#00A099] text-white text-sm font-medium rounded-full hover:bg-[#008a83] transition-colors shadow-sm"
             >
               Nous contacter
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile button */}
@@ -105,22 +106,22 @@ export default function Navbar() {
           >
             <nav className="flex flex-col px-6 py-4 gap-3">
               {links.map((l) => (
-                <a
+                <Link
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
                   className="text-sm font-medium text-slate-700 hover:text-[#00A099] transition-colors py-1"
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
-              <a
+              <Link
                 href="/#contact"
                 onClick={() => setOpen(false)}
                 className="mt-1 px-5 py-2.5 bg-[#00A099] text-white text-sm font-medium rounded-full text-center hover:bg-[#008a83] transition-colors"
               >
                 Nous contacter
-              </a>
+              </Link>
             </nav>
           </motion.div>
         )}
