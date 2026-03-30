@@ -44,6 +44,37 @@ body {
   color: var(--foreground);
 }
 
+/* ── Article body typography ── */
+.article-body h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #124761;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.article-body p {
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.article-body ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #475569;
+}
+.article-body li {
+  line-height: 1.8;
+  margin-bottom: 0.25rem;
+}
+.article-body a {
+  color: #00A099;
+  text-decoration: none;
+}
+.article-body a:hover {
+  text-decoration: underline;
+}
+
 /* ── Marquee animation ── */
 @keyframes marquee {
   0%   { transform: translateX(0); }

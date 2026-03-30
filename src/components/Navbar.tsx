@@ -1,21 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import LinkedinIcon from "./LinkedinIcon";
 
 const links = [
-  { label: "Accueil", href: "#accueil" },
-  { label: "Missions", href: "#missions" },
-  { label: "Équipe", href: "#equipe" },
-  { label: "Références", href: "#references" }
+  { label: "Accueil", href: "/#accueil" },
+  { label: "Missions", href: "/#missions" },
+  { label: "Équipe", href: "/#equipe" },
+  { label: "Références", href: "/#references" },
+  { label: "Articles", href: "/articles" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const solid = !isHome || scrolled;
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -25,7 +30,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${solid
         ? "bg-white/92 backdrop-blur-md shadow-sm border-b border-slate-100"
         : "bg-transparent"
         }`}
@@ -33,13 +38,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#accueil" className="flex items-center gap-2.5 group">
+          <a href="/" className="flex items-center gap-2.5 group">
             <div className="relative w-28 h-8 transition-opacity group-hover:opacity-80">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/logo.png`}
                 alt="SYNOPTIC AMO"
                 fill
-                className={`object-contain object-left transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"
+                className={`object-contain object-left transition-all duration-300 ${solid ? "" : "brightness-0 invert"
                   }`}
                 sizes="112px"
                 priority
@@ -53,7 +58,7 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className={`text-sm font-medium transition-colors hover:text-[#00A099] ${scrolled ? "text-slate-600" : "text-white/80"
+                className={`text-sm font-medium transition-colors hover:text-[#00A099] ${solid ? "text-slate-600" : "text-white/80"
                   }`}
               >
                 {l.label}
@@ -69,7 +74,7 @@ export default function Navbar() {
               <span className="text-white"><LinkedinIcon size={15} /></span>
             </a>
             <a
-              href="#contact"
+              href="/#contact"
               className="ml-1 px-5 py-2 bg-[#00A099] text-white text-sm font-medium rounded-full hover:bg-[#008a83] transition-colors shadow-sm"
             >
               Nous contacter
@@ -78,7 +83,7 @@ export default function Navbar() {
 
           {/* Mobile button */}
           <button
-            className={`lg:hidden p-2 rounded-lg transition-colors ${scrolled ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
+            className={`lg:hidden p-2 rounded-lg transition-colors ${solid ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
               }`}
             onClick={() => setOpen(!open)}
             aria-label="Menu"
@@ -110,7 +115,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="mt-1 px-5 py-2.5 bg-[#00A099] text-white text-sm font-medium rounded-full text-center hover:bg-[#008a83] transition-colors"
               >

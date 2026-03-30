@@ -15,6 +15,11 @@ const SLIDES = [
     src: "/img/image001.jpg",
     alt: "Équipement public réalisé avec l'accompagnement SYNOPTIC AMO",
   },
+  {
+    src: "/img/Image-Accueil.png",
+    alt: "Accompagnement de projets de construction par SYNOPTIC AMO",
+    credit: "Agence Chabanne",
+  },
 ];
 
 const HEADLINE_PARTS = [
@@ -184,6 +189,22 @@ export default function Hero() {
       >
         <ChevronDown size={28} />
       </a>
+
+      {/* ── Photo credit ── */}
+      <AnimatePresence>
+        {SLIDES[current].credit && (
+          <motion.p
+            key={current}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute bottom-24 right-4 z-20 text-white/40 text-[10px] tracking-wide"
+          >
+            © {SLIDES[current].credit}
+          </motion.p>
+        )}
+      </AnimatePresence>
 
       {/* ── Wave divider ── */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
