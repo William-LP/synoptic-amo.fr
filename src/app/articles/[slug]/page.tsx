@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
 import Link from "next/link";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
 }
