@@ -12,6 +12,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # Allows triggering via external HTTP POST to the GitHub API
+  repository_dispatch:
+    types: [deploy]
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -72,6 +76,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          MY_SECRET: ${{ github.event.client_payload.secret }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
