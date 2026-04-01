@@ -7,6 +7,7 @@ import { motion, useInView } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { stagger, fadeInUp } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
+import type { Reference, CategorieReference, RefSection } from "@/app/types/appData";
 
 const MapClient = dynamic(() => import("./MapClient"), {
   ssr: false,
@@ -20,42 +21,12 @@ const MapClient = dynamic(() => import("./MapClient"), {
   ),
 });
 
-/* ── Client logos ── */
-const LOGOS = [
-  "xl_media_image9.png", "xl_media_image10.png", "xl_media_image12.png",
-  "xl_media_image13.png", "xl_media_image14.png", "xl_media_image15.png",
-  "xl_media_image16.png", "xl_media_image17.png", "xl_media_image18.png",
-  "xl_media_image19.png", "xl_media_image20.png", "xl_media_image21.png",
-  "xl_media_image23.jpeg", "xl_media_image25.png", "xl_media_image26.png",
-  "xl_media_image28.png", "xl_media_image29.jpeg", "xl_media_image30.jpeg",
-  "xl_media_image31.png", "xl_media_image32.png", "xl_media_image33.jpeg",
-  "xl_media_image42.png", "xl_media_image43.png", "xl_media_image44.png",
-  "xl_media_image45.png", "xl_media_image46.gif", "xl_media_image47.jpeg",
-  "xl_media_image48.png", "xl_media_image49.png", "xl_media_image50.jpeg",
-  "xl_media_image51.jpeg", "xl_media_image61.png", "xl_media_image67.png",
-  "xl_media_image87.png", "xl_media_image96.png", "xl_media_image97.png",
-  "xl_media_image98.png", "xl_media_image103.png", "xl_media_image105.png",
-  "xl_media_image106.png", "xl_media_image107.png", "xl_media_image108.png",
-  "xl_media_image113.png", "xl_media_image115.png", "xl_media_image116.png",
-  "xl_media_image117.png", "xl_media_image119.png", "xl_media_image120.png",
-  "xl_media_image121.png", "xl_media_image122.png", "xl_media_image123.png",
-  "xl_media_image124.png", "xl_media_image125.jpeg", "xl_media_image126.png",
-  "xl_media_image132.png", "xl_media_image133.jpeg", "xl_media_image135.png",
-  "xl_media_image136.png", "xl_media_image137.png",
-  "Ministere_de_lEconomie_des_Finances_et_de_la_Souverainete_industrielle_et_numerique.svg-1024x622.png",
-];
-
-const half = Math.ceil(LOGOS.length / 2);
-const track1 = [...LOGOS.slice(0, half), ...LOGOS.slice(0, half)];
-const track2 = [...LOGOS.slice(half), ...LOGOS.slice(half)];
-
-function LogoCard({ file }: { file: string }) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+function LogoCard({ src, alt }: { src: string; alt?: string }) {
   return (
     <div className="shrink-0 w-36 h-20 mx-3 flex items-center justify-center bg-white dark:bg-[#1c3144] rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-[#00A099]/30 transition-all p-3">
       <Image
-        src={`${basePath}/img/logos/${file}`}
-        alt=""
+        src={src}
+        alt={alt ?? ""}
         width={0}
         height={0}
         sizes="120px"
@@ -66,11 +37,22 @@ function LogoCard({ file }: { file: string }) {
   );
 }
 
-export default function References() {
+interface MapSectionProps {
+  refSection?: RefSection;
+  references?: Reference[];
+  categories?: CategorieReference[];
+}
+
+export default function References({ refSection, references = [], categories = [] }: MapSectionProps) {
   const titleRef = useRef<HTMLDivElement>(null);
   const clientsRef = useRef<HTMLDivElement>(null);
   const mapInView = useInView(titleRef, { once: true });
   const clientsInView = useInView(clientsRef, { once: true });
+
+  const logos = references.filter((r) => r.logo);
+  const half = Math.ceil(logos.length / 2);
+  const track1 = logos.length > 0 ? [...logos.slice(0, half), ...logos.slice(0, half)] : [];
+  const track2 = logos.length > 0 ? [...logos.slice(half), ...logos.slice(half)] : [];
 
   return (
     <section id="references" className="relative bg-[#f7f9fc] dark:bg-[#0f1e2a] pb-0 pt-24 lg:pt-32">
@@ -95,12 +77,10 @@ export default function References() {
             Nos références
           </motion.div>
           <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-4 leading-tight">
-            Présents dans toute
-            <br />la région Auvergne-Rhône-Alpes
+            {refSection?.titre || ""}
           </motion.h2>
           <motion.p variants={fadeInUp} className="text-slate-500 dark:text-slate-400 leading-relaxed">
-            Filtrez nos références par catégorie et cliquez sur un marqueur
-            pour découvrir le détail du projet.
+            {refSection?.sous_titre || ""}
           </motion.p>
         </motion.div>
 
@@ -109,7 +89,7 @@ export default function References() {
           animate={mapInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <MapClient />
+          <MapClient references={references} categories={categories} />
         </motion.div>
       </div>
 
@@ -136,41 +116,40 @@ export default function References() {
               <span className="w-8 h-px bg-[#00A099]" />
             </motion.div>
             <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-4">
-              Plus de 50 collectivités
-              <br />accompagnées
+              {refSection?.titre_2 || ""}
             </motion.h2>
             <motion.p variants={fadeInUp} className="text-slate-500 dark:text-slate-400 leading-relaxed">
-              Collectivités, établissements publics et organismes en
-              Auvergne-Rhône-Alpes nous font confiance pour leurs projets de
-              construction et d&apos;aménagement.
+              {refSection?.sous_titre_2 || ""}
             </motion.p>
           </motion.div>
         </div>
 
         {/* Marquee rows — full bleed */}
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
+        {logos.length > 0 && (
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
 
-          <div className="flex overflow-hidden mb-4">
-            <div className="animate-marquee flex shrink-0" style={{ animationDuration: "45s" }}>
-              {track1.map((file, i) => (
-                <LogoCard key={`r1-${i}`} file={file} />
-              ))}
+            <div className="flex overflow-hidden mb-4">
+              <div className="animate-marquee flex shrink-0" style={{ animationDuration: "45s" }}>
+                {track1.map((ref, i) => (
+                  <LogoCard key={`r1-${i}`} src={ref.logo} alt={ref.maitre_ouvrage} />
+                ))}
+              </div>
+            </div>
+
+            <div className="flex overflow-hidden">
+              <div
+                className="animate-marquee flex shrink-0"
+                style={{ animationDirection: "reverse", animationDuration: "50s" }}
+              >
+                {track2.map((ref, i) => (
+                  <LogoCard key={`r2-${i}`} src={ref.logo} alt={ref.maitre_ouvrage} />
+                ))}
+              </div>
             </div>
           </div>
-
-          <div className="flex overflow-hidden">
-            <div
-              className="animate-marquee flex shrink-0"
-              style={{ animationDirection: "reverse", animationDuration: "50s" }}
-            >
-              {track2.map((file, i) => (
-                <LogoCard key={`r2-${i}`} file={file} />
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
 
         <div className="mt-16">
           <WaveDivider fillColor="var(--wave-bg-white)" bgColor="var(--wave-bg-light)" />

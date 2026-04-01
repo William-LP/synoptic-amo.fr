@@ -7,52 +7,42 @@ import { MapPin, Mail, Phone, ArrowRight } from "lucide-react";
 import { stagger, fadeInLeft, fadeInUp, springCard } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
 
-const offices = [
-  {
-    city: "Lyon — Villeurbanne",
-    address: "105 rue du 4 août 1789",
-    zip: "69100 Villeurbanne",
-    name: "Gilles CERTAIN",
-    email: "gilles.certain@synoptic-amo.fr",
-    phone: "07 69 29 44 15",
-    mapUrl: "https://maps.google.com/?q=105+rue+du+4+aout+1789+69100+Villeurbanne",
-    heroImage: "/img/lyon.jpg",
-    index: 0,
-  },
-  {
-    city: "Chambéry — Savoie",
-    address: "334 rue Nicolas Parent",
-    zip: "73000 Chambéry",
-    name: "Marion BAUVENT",
-    email: "marion.bauvent@synoptic-amo.fr",
-    phone: "07 69 79 83 20",
-    mapUrl: "https://maps.google.com/?q=334+rue+Nicolas+Parent+73000+Chambery",
-    heroImage: "/img/chambery.jpg",
-    index: 1,
-  },
-];
+export interface OfficeData {
+  city: string;
+  address: string;
+  name: string;
+  email: string;
+  phone: string;
+  mapUrl: string;
+  heroImage: string;
+}
 
-function OfficeCard({ office }: { office: (typeof offices)[0] }) {
+
+function OfficeCard({ office, index }: { office: OfficeData; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
-      variants={springCard(office.index)}
+      variants={springCard(index)}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       className="group bg-white dark:bg-[#1c3144] rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:border-[#00A099]/20 hover:shadow-xl hover:shadow-[#00A099]/6 transition-all duration-500"
     >
       {/* City hero image */}
       <div className="relative h-48 overflow-hidden">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${office.heroImage}`}
-          alt={office.city}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, 50vw"
-        />
+        {office.heroImage ? (
+          <Image
+            src={office.heroImage.startsWith("http") ? office.heroImage : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${office.heroImage}`}
+            alt={office.city}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, 50vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-[#124761]/20" />
+        )}
         {/* Gradient overlay — bottom-up for text legibility */}
         <div className="absolute inset-0 bg-linear-to-t from-[#124761]/75 via-[#124761]/20 to-transparent" />
 
@@ -80,9 +70,7 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
         <div className="space-y-2.5">
           <div className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400">
             <MapPin size={14} className="text-slate-400 mt-0.5 shrink-0" />
-            <span>
-              {office.address}<br />{office.zip}
-            </span>
+            <span>{office.address}</span>
           </div>
           <a
             href={`mailto:${office.email}`}
@@ -112,7 +100,14 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
   );
 }
 
-export default function Contact() {
+interface ContactSectionData {
+  titre: string;
+  sous_titre: string;
+  carte_titre: string;
+  carte_contenu: string;
+}
+
+export default function Contact({ offices, contactSection }: { offices?: OfficeData[]; contactSection?: ContactSectionData }) {
   const titleRef = useRef<HTMLDivElement>(null);
   const inView = useInView(titleRef, { once: true });
 
@@ -140,13 +135,10 @@ export default function Contact() {
               Contact
             </motion.div>
             <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-6 leading-tight">
-              Parlons de
-              <br />votre projet
+              {contactSection?.titre || ""}
             </motion.h2>
             <motion.p variants={fadeInLeft} className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
-              Notre équipe est disponible pour répondre à vos questions et vous
-              accompagner dans la définition de votre projet. N&apos;hésitez pas
-              à nous contacter.
+              {contactSection?.sous_titre || ""}
             </motion.p>
 
             <motion.div
@@ -157,21 +149,24 @@ export default function Contact() {
                 <div className="w-8 h-8 rounded-lg bg-[#00A099]/10 flex items-center justify-center">
                   <Mail size={14} className="text-[#00A099]" />
                 </div>
-                <span className="font-semibold text-[#124761] dark:text-slate-100 text-sm">Réponse rapide</span>
+                <span className="font-semibold text-[#124761] dark:text-slate-100 text-sm">
+                  {contactSection?.carte_titre || ""}
+                </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                Nous nous engageons à répondre à toute demande dans les
-                48h ouvrées.
+                {contactSection?.carte_contenu || ""}
               </p>
             </motion.div>
           </motion.div>
 
           {/* Right: office cards — 3 cols */}
-          <div className="lg:col-span-3 grid sm:grid-cols-2 gap-5">
-            {offices.map((o) => (
-              <OfficeCard key={o.city} office={o} />
-            ))}
-          </div>
+          {offices && offices.length > 0 && (
+            <div className="lg:col-span-3 grid sm:grid-cols-2 gap-5">
+              {offices.map((o, i) => (
+                <OfficeCard key={o.city} office={o} index={i} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

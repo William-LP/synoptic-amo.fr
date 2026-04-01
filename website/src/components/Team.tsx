@@ -3,25 +3,35 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Mail, Phone, MapPin, Award, Briefcase } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import LinkedinIcon from "./LinkedinIcon";
 import { stagger, fadeInUp, fadeInLeft, springCard } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
+import type { Equipe } from "@/app/types/appData";
 
-const PARTNERS = [
-  "GEVOLYS.png", "TERRE-ECO.png", "Synapse-768x192.jpg", "oe.png",
-  "LOGO_KALEIDO-WEB-2-768x148.jpg", "inddigo.jpg", "ICAMO.png", "ESSOR.png",
-  "EODD.png", "EA-768x515.png", "AXONE.png", "AUXILIUM.png", "ARBRE.jpg",
-  "artelia.jpg", "Amoes.png", "A2CSPORTS-768x270.png", "2OINGENIERE-768x325.png",
-  "Alphaico-768x342.jpg", "BETEM.jpg", "dpgco-768x421.jpg", "magma-768x564.jpg",
-];
 
-function PartnerLogo({ file }: { file: string }) {
+export interface TeamMember {
+  name: string;
+  role: string;
+  title: string;
+  office: string;
+  address: string;
+  email: string;
+  phone: string;
+  photo: string;
+  career: Array<{ years: string; label: string }>;
+  color: string;
+  linkedin?: string;
+}
+
+function PartnerLogo({ src }: { src: string }) {
+  if (!src) return null;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const imgSrc = src.startsWith("http") ? src : `${basePath}/img/partners/${src}`;
   return (
     <div className="shrink-0 w-32 h-16 mx-4 flex items-center justify-center">
       <Image
-        src={`${basePath}/img/partners/${file}`}
+        src={imgSrc}
         alt=""
         width={0}
         height={0}
@@ -33,52 +43,12 @@ function PartnerLogo({ file }: { file: string }) {
   );
 }
 
-const members = [
-  {
-    name: "Gilles CERTAIN",
-    role: "Programmiste expérimenté",
-    title: "Dirigeant & Programmiste",
-    office: "Lyon — Villeurbanne",
-    address: "105 rue du 4 août 1789, 69100 Villeurbanne",
-    email: "gilles.certain@synoptic-amo.fr",
-    phone: "07 69 29 44 15",
-    photo: "/img/photo-gilles.jpg",
-    experience: "19 ans d'expérience en programmation",
-    specialty: "Équipements publics (600+ projets réalisés)",
-    career: [
-      { years: "Depuis 2023", label: "Dirigeant — SYNOPTIC AMO, Lyon" },
-      { years: "2018 – 2022", label: "Programmiste senior — SAMOP Rhône-Alpes" },
-      { years: "2012 – 2017", label: "Programmiste senior — PARVIS-MENIGHETTI" },
-      { years: "2006 – 2011", label: "Chef de projet — MENIGHETTI, Paris" },
-    ],
-    color: "from-[#00A099] to-[#00bfb8]",
-  },
-  {
-    name: "Marion BAUVENT",
-    role: "Architecte & Programmiste",
-    title: "Programmiste senior",
-    office: "Chambéry — Savoie",
-    address: "334 rue Nicolas Parent, 73000 Chambéry",
-    email: "marion.bauvent@synoptic-amo.fr",
-    phone: "07 69 79 83 20",
-    photo: "/img/photo-marion.jpg",
-    experience: "10 ans d'expérience",
-    specialty: "Expertise fonctionnelle, technique & réglementaire",
-    career: [
-      { years: "Depuis 2024", label: "Programmiste senior — SYNOPTIC AMO, Chambéry" },
-      { years: "2022 – 2023", label: "Programmiste senior — ABAMO&CO" },
-      { years: "2019 – 2021", label: "Architecte — CIMEA Architecte" },
-      { years: "2015 – 2018", label: "Assistante architecte — PATRIARCHE" },
-    ],
-    color: "from-[#124761] to-[#1a5c7a]",
-  },
-];
 
 function TeamCard({
   member,
   index,
 }: {
-  member: (typeof members)[0];
+  member: TeamMember;
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -99,15 +69,17 @@ function TeamCard({
         <div className="absolute top-4 -right-4 w-24 h-24 rounded-full bg-white/8" />
 
         {/* Photo */}
-        <div className="absolute bottom-0 right-6 w-36 h-44 overflow-hidden rounded-t-2xl">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${member.photo}`}
-            alt={member.name}
-            fill
-            className="object-cover object-top"
-            sizes="144px"
-          />
-        </div>
+        {member.photo && (
+          <div className="absolute bottom-0 right-6 w-36 h-44 overflow-hidden rounded-t-2xl">
+            <Image
+              src={member.photo.startsWith("http") ? member.photo : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${member.photo}`}
+              alt={member.name}
+              fill
+              className="object-cover object-top"
+              sizes="144px"
+            />
+          </div>
+        )}
 
         {/* Name badge */}
         <div className="absolute bottom-4 left-6">
@@ -117,17 +89,6 @@ function TeamCard({
       </div>
 
       <div className="p-6">
-        {/* Highlights */}
-        <div className="flex flex-wrap gap-2 mb-5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#00A099]/8 dark:bg-[#00A099]/15 text-[#00A099] text-xs font-medium rounded-full">
-            <Award size={11} />
-            {member.experience}
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#124761]/6 dark:bg-slate-700 text-[#124761] dark:text-slate-200 text-xs font-medium rounded-full">
-            <Briefcase size={11} />
-            {member.specialty}
-          </span>
-        </div>
 
         {/* Career timeline */}
         <div className="mb-5">
@@ -181,7 +142,15 @@ function TeamCard({
   );
 }
 
-export default function Team() {
+export default function Team({
+  equipe,
+  members,
+  partners,
+}: {
+  equipe?: Equipe;
+  members?: TeamMember[];
+  partners?: string[];
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const titleInView = useInView(titleRef, { once: true });
@@ -215,60 +184,62 @@ export default function Team() {
               <span className="w-8 h-px bg-[#00A099]" />
               Notre équipe
             </motion.div>
-            <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-6 leading-tight">
-              Une expertise reconnue
-              <br />à votre service
-            </motion.h2>
-            <motion.p variants={fadeInLeft} className="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
-              SYNOPTIC AMO réunit des programmistes expérimentés qui mettent
-              leur savoir-faire au service des maîtres d&apos;ouvrage publics et
-              privés, avec réactivité et rigueur.
-            </motion.p>
-            <motion.div variants={stagger} className="space-y-3">
-              {[
-                "Expertise en programmation architecturale",
-                "Maîtrise des procédures marchés publics",
-                "Accompagnement réactif et personnalisé",
-                "Présence en Auvergne-Rhône-Alpes",
-              ].map((item) => (
-                <motion.div
-                  key={item}
-                  variants={fadeInUp}
-                  className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300"
-                >
-                  <div className="w-5 h-5 rounded-full bg-[#00A099]/10 flex items-center justify-center shrink-0">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#00A099]" />
-                  </div>
-                  {item}
-                </motion.div>
-              ))}
-            </motion.div>
+            {equipe?.titre && (
+              <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-6 leading-tight">
+                {equipe.titre}
+              </motion.h2>
+            )}
+            {equipe?.sous_titre && (
+              <motion.p variants={fadeInLeft} className="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                {equipe.sous_titre}
+              </motion.p>
+            )}
+            {equipe?.points && equipe.points.length > 0 && (
+              <motion.div variants={stagger} className="space-y-3">
+                {equipe.points.map((item) => (
+                  <motion.div
+                    key={item}
+                    variants={fadeInUp}
+                    className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300"
+                  >
+                    <div className="w-5 h-5 rounded-full bg-[#00A099]/10 flex items-center justify-center shrink-0">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#00A099]" />
+                    </div>
+                    {item}
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Right: cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-5">
-            {members.map((m, i) => (
-              <TeamCard key={m.name} member={m} index={i} />
-            ))}
-          </div>
+          {members && members.length > 0 && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-5">
+              {members.toReversed().map((m, i) => (
+                <TeamCard key={m.name} member={m} index={i} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Partners carousel */}
-      <div className="mt-20 border-t border-slate-100 dark:border-slate-700 pt-14">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
-          <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Nos partenaires</p>
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
-          <div className="flex animate-marquee" style={{ animationDuration: "30s" }}>
-            {[...PARTNERS, ...PARTNERS].map((file, i) => (
-              <PartnerLogo key={i} file={file} />
-            ))}
+      {partners && partners.length > 0 && (
+        <div className="mt-20 border-t border-slate-100 dark:border-slate-700 pt-14">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
+            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Nos partenaires</p>
+          </div>
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
+            <div className="flex animate-marquee" style={{ animationDuration: "30s" }}>
+              {[...partners, ...partners].map((src, i) => (
+                <PartnerLogo key={i} src={src} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Wave to light bg (Map section) */}
       <div className="mt-14">

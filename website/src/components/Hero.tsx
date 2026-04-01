@@ -5,36 +5,21 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import WaveDivider from "./WaveDivider";
+import type { TitrePart } from "@/app/types/appData";
 
-const SLIDES = [
-  {
-    src: "/img/image002.jpg",
-    alt: "Projet de construction accompagné par SYNOPTIC AMO",
-  },
-  {
-    src: "/img/image001.jpg",
-    alt: "Équipement public réalisé avec l'accompagnement SYNOPTIC AMO",
-  },
-  {
-    src: "/img/Image-Accueil.png",
-    alt: "Accompagnement de projets de construction par SYNOPTIC AMO",
-    credit: "Agence Chabanne",
-  },
-];
+interface HeroSlide {
+  src: string;
+  alt: string;
+  credit?: string;
+}
 
-const HEADLINE_PARTS = [
-  { text: "Construisons", highlight: false },
-  { text: "ensemble", highlight: false },
-  { text: "une base", highlight: false },
-  { text: "solide", highlight: true },
-];
-
-export default function Hero() {
+export default function Hero({ titre, slides, sousTitre }: { titre: TitrePart[]; slides: HeroSlide[]; sousTitre: string }) {
+  const SLIDES = slides ?? [];
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const next = useCallback(() => setCurrent((c) => (c + 1) % SLIDES.length), []);
-  const prev = useCallback(() => setCurrent((c) => (c - 1 + SLIDES.length) % SLIDES.length), []);
+  const next = useCallback(() => setCurrent((c) => SLIDES.length ? (c + 1) % SLIDES.length : 0), [SLIDES.length]);
+  const prev = useCallback(() => setCurrent((c) => SLIDES.length ? (c - 1 + SLIDES.length) % SLIDES.length : 0), [SLIDES.length]);
 
   useEffect(() => {
     if (paused) return;
@@ -49,25 +34,27 @@ export default function Hero() {
     >
       {/* ── Image carousel ── */}
       <div className="absolute inset-0">
-        <AnimatePresence>
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${SLIDES[current].src}`}
-              alt={SLIDES[current].alt}
-              fill
-              priority={current === 0}
-              className="object-cover"
-              sizes="100vw"
-            />
-          </motion.div>
-        </AnimatePresence>
+        {SLIDES.length > 0 && (
+          <AnimatePresence>
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={SLIDES[current].src.startsWith("http") ? SLIDES[current].src : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${SLIDES[current].src}`}
+                alt={SLIDES[current].alt}
+                fill
+                priority={current === 0}
+                className="object-cover"
+                sizes="100vw"
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
 
         {/* Dark navy overlay */}
         <div className="absolute inset-0 bg-[#124761]/55" />
@@ -78,37 +65,27 @@ export default function Hero() {
 
       {/* ── Hero content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center w-full">
-        {/* Headline — word-by-word reveal */}
+        {/* Headline — part-by-part reveal */}
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-4 tracking-tight">
-          <span className="block">
-            {HEADLINE_PARTS.map((part, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 24, rotateX: -20 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{
-                  duration: 0.55,
-                  delay: 0.3 + i * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className={`inline-block mr-4 ${part.highlight
-                  ? "text-transparent bg-clip-text bg-linear-to-r from-[#4ECDC4] to-[#00A099]"
-                  : ""
-                  }`}
-                style={{ perspective: "600px" }}
-              >
-                {part.text}
-              </motion.span>
-            ))}
-          </span>
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="block"
-          >
-            pour votre projet
-          </motion.span>
+          {titre.map((part, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: 24, rotateX: -20 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{
+                duration: 0.55,
+                delay: 0.3 + i * 0.15,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className={`inline-block mr-4 ${part.highlight
+                ? "text-transparent bg-clip-text bg-linear-to-r from-[#4ECDC4] to-[#00A099]"
+                : ""
+                }`}
+              style={{ perspective: "600px" }}
+            >
+              {part.text}
+            </motion.span>
+          ))}
         </h1>
 
         <motion.p
@@ -117,8 +94,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.85 }}
           className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          SYNOPTIC AMO vous accompagne à chaque étape de vos projets de
-          construction — de la définition des besoins jusqu&apos;à la livraison.
+          {sousTitre}
         </motion.p>
 
         {/* CTAs */}
@@ -145,41 +121,45 @@ export default function Hero() {
       </div>
 
       {/* ── Carousel controls ── */}
-      <div
-        className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <button
-          onClick={prev}
-          className="pointer-events-auto w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
-          aria-label="Image précédente"
+      {SLIDES.length > 1 && (
+        <div
+          className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
-          <ChevronLeft size={20} />
-        </button>
-        <button
-          onClick={next}
-          className="pointer-events-auto w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
-          aria-label="Image suivante"
-        >
-          <ChevronRight size={20} />
-        </button>
-      </div>
+          <button
+            onClick={prev}
+            className="pointer-events-auto w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
+            aria-label="Image précédente"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={next}
+            className="pointer-events-auto w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
+            aria-label="Image suivante"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      )}
 
       {/* ── Dot navigation ── */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {SLIDES.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => { setCurrent(i); setPaused(true); }}
-            aria-label={`Slide ${i + 1}`}
-            className={`rounded-full transition-all duration-300 ${i === current
-              ? "bg-white w-6 h-2"
-              : "bg-white/40 hover:bg-white/70 w-2 h-2"
-              }`}
-          />
-        ))}
-      </div>
+      {SLIDES.length > 1 && (
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setCurrent(i); setPaused(true); }}
+              aria-label={`Slide ${i + 1}`}
+              className={`rounded-full transition-all duration-300 ${i === current
+                ? "bg-white w-6 h-2"
+                : "bg-white/40 hover:bg-white/70 w-2 h-2"
+                }`}
+            />
+          ))}
+        </div>
+      )}
 
       {/* ── Scroll indicator ── */}
       <a
@@ -192,7 +172,7 @@ export default function Hero() {
 
       {/* ── Photo credit ── */}
       <AnimatePresence>
-        {SLIDES[current].credit && (
+        {SLIDES.length > 0 && SLIDES[current].credit && (
           <motion.p
             key={current}
             initial={{ opacity: 0 }}

@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { Mail } from "lucide-react";
 import LinkedinIcon from "./LinkedinIcon";
+import type { FooterAgence } from "@/app/types/appData";
 
-export default function Footer() {
+
+
+export default function Footer({ agences }: { agences?: FooterAgence[] }) {
   const year = new Date().getFullYear();
+  const displayAgences = agences && agences.length > 0 ? agences : [];
 
   return (
     <footer className="bg-[#124761] text-white">
@@ -77,24 +81,25 @@ export default function Footer() {
               Nos agences
             </h4>
             <div className="space-y-5">
-              <div>
-                <p className="text-sm font-medium text-white/70 mb-1">Lyon — Villeurbanne</p>
-                <p className="text-xs text-white/40 leading-relaxed mb-1">
-                  105 rue du 4 août 1789<br />69100 Villeurbanne
-                </p>
-                <a href="tel:0769294415" className="text-xs text-[#00A099] hover:text-[#4ECDC4] transition-colors">
-                  07 69 29 44 15
-                </a>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white/70 mb-1">Chambéry — Savoie</p>
-                <p className="text-xs text-white/40 leading-relaxed mb-1">
-                  334 rue Nicolas Parent<br />73000 Chambéry
-                </p>
-                <a href="tel:0769798320" className="text-xs text-[#00A099] hover:text-[#4ECDC4] transition-colors">
-                  07 69 79 83 20
-                </a>
-              </div>
+              {displayAgences.map((a) => {
+                const lines = a.adresse.split(",").map((s) => s.trim());
+                return (
+                  <div key={a.ville}>
+                    <p className="text-sm font-medium text-white/70 mb-1">{a.ville}</p>
+                    <p className="text-xs text-white/40 leading-relaxed mb-1">
+                      {lines.map((line, i) => (
+                        <span key={i}>{line}{i < lines.length - 1 && <br />}</span>
+                      ))}
+                    </p>
+                    <a
+                      href={`tel:${a.telephone.replace(/\s/g, "")}`}
+                      className="text-xs text-[#00A099] hover:text-[#4ECDC4] transition-colors"
+                    >
+                      {a.telephone}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -104,12 +109,25 @@ export default function Footer() {
           <p className="text-xs text-white/30">
             © {year} SYNOPTIC-AMO. Tous droits réservés.
           </p>
-          <a
-            href="#"
-            className="text-xs text-white/30 hover:text-white/60 transition-colors"
-          >
-            Mentions légales
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="/mentions-legales"
+              className="text-xs text-white/30 hover:text-white/60 transition-colors"
+            >
+              Mentions légales
+            </a>
+            <span className="text-xs text-white/20">
+              Site réalisé par{" "}
+              <a
+                href="https://zapia.fr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/50 transition-colors"
+              >
+                zapia.fr
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>
