@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "missions",
+  "info": {
+    "singularName": "mission",
+    "pluralName": "missions",
+    "displayName": "Mission"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Titre": {
+      "type": "string"
+    },
+    "Sous_titre": {
+      "type": "string"
+    },
+    "Etape": {
+      "type": "component",
+      "component": "synoptic.etape",
+      "repeatable": true,
+      "min": 5,
+      "max": 5
+    },
+    "CTA_titre": {
+      "type": "string"
+    },
+    "CTA_contenu": {
+      "type": "string"
+    },
+    "CTA_bouton": {
+      "type": "string"
+    }
+  }
+}

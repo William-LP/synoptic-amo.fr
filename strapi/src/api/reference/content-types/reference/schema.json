@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "references",
+  "info": {
+    "singularName": "reference",
+    "pluralName": "references",
+    "displayName": "Référence"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "categorie_reference": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::categorie-reference.categorie-reference"
+    },
+    "Nom_operation": {
+      "type": "string"
+    },
+    "Maitre_ouvrage": {
+      "type": "string"
+    },
+    "Ville": {
+      "type": "string"
+    },
+    "Surface_metres_carres": {
+      "type": "string"
+    },
+    "Annee": {
+      "type": "string"
+    }
+  }
+}

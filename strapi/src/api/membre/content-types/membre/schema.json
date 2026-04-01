@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "membres",
+  "info": {
+    "singularName": "membre",
+    "pluralName": "membres",
+    "displayName": "Membre"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Nom": {
+      "type": "string"
+    },
+    "Titre": {
+      "type": "string"
+    },
+    "Parcours": {
+      "type": "component",
+      "component": "synoptic.parcours",
+      "repeatable": true
+    },
+    "Agence": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::agence.agence"
+    },
+    "Telephone": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "Linkedin": {
+      "type": "string"
+    }
+  }
+}

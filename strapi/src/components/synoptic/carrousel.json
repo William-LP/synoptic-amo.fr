@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_synoptic_carrousels",
+  "info": {
+    "displayName": "Carrousel"
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Credit": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

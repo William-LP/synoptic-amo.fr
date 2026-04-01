@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_synoptic_parcours",
+  "info": {
+    "displayName": "Parcours"
+  },
+  "options": {},
+  "attributes": {
+    "Date": {
+      "type": "string"
+    },
+    "Experience": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

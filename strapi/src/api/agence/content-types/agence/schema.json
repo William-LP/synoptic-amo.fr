@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "agences",
+  "info": {
+    "singularName": "agence",
+    "pluralName": "agences",
+    "displayName": "Agence"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Ville": {
+      "type": "string"
+    },
+    "Adresse": {
+      "type": "string"
+    },
+    "Illustration": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_synoptic_etapes",
+  "info": {
+    "displayName": "Etape"
+  },
+  "options": {},
+  "attributes": {
+    "Titre": {
+      "type": "string"
+    },
+    "Sous_titre": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
