@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+/* ── Aptos font (loads when files are present in public/fonts/) ── */
+@font-face {
+  font-family: "Aptos";
+  src: url("/fonts/Aptos.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aptos";
+  src: url("/fonts/Aptos-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aptos";
+  src: url("/fonts/Aptos-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #f7f9fc;
+  --foreground: #124761;
+  /* Wave divider fill colors (used by SVG fill attribute) */
+  --wave-bg-light: #f7f9fc;
+  --wave-bg-white: #ffffff;
+  --wave-bg-footer: #124761;
+}
+
+.dark {
+  --background: #0f1e2a;
+  --foreground: #e2eef5;
+  --wave-bg-light: #0f1e2a;
+  --wave-bg-white: #162534;
+  --wave-bg-footer: #124761;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* Aptos first, Inter (Google font) as fallback */
+  --font-sans: "Aptos", var(--font-inter), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* ── Article body typography ── */
+.article-body h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #124761;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.dark .article-body h2 {
+  color: #c8e6f5;
+}
+.article-body p {
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.dark .article-body p {
+  color: #94a3b8;
+}
+.article-body ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #475569;
+}
+.dark .article-body ul {
+  color: #94a3b8;
+}
+.article-body li {
+  line-height: 1.8;
+  margin-bottom: 0.25rem;
+}
+.article-body a {
+  color: #00A099;
+  text-decoration: none;
+}
+.article-body a:hover {
+  text-decoration: underline;
+}
+
+/* ── Marquee animation ── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
