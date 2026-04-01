@@ -11,8 +11,8 @@ import WaveDivider from "./WaveDivider";
 const MapClient = dynamic(() => import("./MapClient"), {
   ssr: false,
   loading: () => (
-    <div className="h-[500px] rounded-3xl bg-slate-100 animate-pulse flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3 text-slate-400">
+    <div className="h-[500px] rounded-3xl bg-slate-100 dark:bg-slate-800 animate-pulse flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3 text-slate-400 dark:text-slate-500">
         <MapPin size={32} />
         <span className="text-sm">Chargement de la carte…</span>
       </div>
@@ -52,7 +52,7 @@ const track2 = [...LOGOS.slice(half), ...LOGOS.slice(half)];
 function LogoCard({ file }: { file: string }) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
-    <div className="shrink-0 w-36 h-20 mx-3 flex items-center justify-center bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-[#00A099]/30 transition-all p-3">
+    <div className="shrink-0 w-36 h-20 mx-3 flex items-center justify-center bg-white dark:bg-[#1c3144] rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-[#00A099]/30 transition-all p-3">
       <Image
         src={`${basePath}/img/logos/${file}`}
         alt=""
@@ -73,7 +73,7 @@ export default function References() {
   const clientsInView = useInView(clientsRef, { once: true });
 
   return (
-    <section id="references" className="relative bg-[#f7f9fc] pb-0 pt-24 lg:pt-32">
+    <section id="references" className="relative bg-[#f7f9fc] dark:bg-[#0f1e2a] pb-0 pt-24 lg:pt-32">
       {/* Blob accent */}
       <div
         className="absolute top-0 -left-24 w-[400px] h-[400px] bg-[#124761]/4 blur-3xl pointer-events-none"
@@ -94,11 +94,11 @@ export default function References() {
             <span className="w-8 h-px bg-[#00A099]" />
             Nos références
           </motion.div>
-          <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] mb-4 leading-tight">
+          <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-4 leading-tight">
             Présents dans toute
             <br />la région Auvergne-Rhône-Alpes
           </motion.h2>
-          <motion.p variants={fadeInUp} className="text-slate-500 leading-relaxed">
+          <motion.p variants={fadeInUp} className="text-slate-500 dark:text-slate-400 leading-relaxed">
             Filtrez nos références par catégorie et cliquez sur un marqueur
             pour découvrir le détail du projet.
           </motion.p>
@@ -114,7 +114,7 @@ export default function References() {
       </div>
 
       {/* ── Clients part ── */}
-      <div className="relative mt-20 bg-[#f7f9fc] pt-16 pb-0 overflow-hidden">
+      <div className="relative mt-20 bg-[#f7f9fc] dark:bg-[#0f1e2a] pt-16 pb-0 overflow-hidden">
         {/* Blob accent */}
         <div
           className="absolute bottom-0 right-0 w-96 h-96 bg-[#00A099]/6 blur-3xl pointer-events-none"
@@ -135,11 +135,11 @@ export default function References() {
               Ils nous font confiance
               <span className="w-8 h-px bg-[#00A099]" />
             </motion.div>
-            <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] mb-4">
+            <motion.h2 variants={fadeInUp} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-4">
               Plus de 50 collectivités
               <br />accompagnées
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-slate-500 leading-relaxed">
+            <motion.p variants={fadeInUp} className="text-slate-500 dark:text-slate-400 leading-relaxed">
               Collectivités, établissements publics et organismes en
               Auvergne-Rhône-Alpes nous font confiance pour leurs projets de
               construction et d&apos;aménagement.
@@ -149,8 +149,8 @@ export default function References() {
 
         {/* Marquee rows — full bleed */}
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
 
           <div className="flex overflow-hidden mb-4">
             <div className="animate-marquee flex shrink-0" style={{ animationDuration: "45s" }}>
@@ -173,7 +173,7 @@ export default function References() {
         </div>
 
         <div className="mt-16">
-          <WaveDivider fillColor="white" bgColor="#f7f9fc" />
+          <WaveDivider fillColor="var(--wave-bg-white)" bgColor="var(--wave-bg-light)" />
         </div>
       </div>
     </section>

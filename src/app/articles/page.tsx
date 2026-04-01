@@ -20,10 +20,10 @@ export default function ArticlesPage() {
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#00A099] mb-3">
               Ressources
             </span>
-            <h1 className="text-3xl lg:text-5xl font-bold text-[#124761] leading-tight">
+            <h1 className="text-3xl lg:text-5xl font-bold text-[#124761] dark:text-slate-100 leading-tight">
               Articles & actualités
             </h1>
-            <p className="mt-4 text-slate-500 text-lg max-w-2xl">
+            <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
               Éclairages techniques, retours d&apos;expérience et actualités
               réglementaires autour de l&apos;Assistance à Maîtrise d&apos;Ouvrage.
             </p>
@@ -32,7 +32,7 @@ export default function ArticlesPage() {
           {/* Grid or empty state */}
           {articles.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-5">
                 <svg
                   className="w-7 h-7 text-slate-400"
                   fill="none"
@@ -47,10 +47,10 @@ export default function ArticlesPage() {
                   />
                 </svg>
               </div>
-              <p className="text-lg font-semibold text-[#124761]">
+              <p className="text-lg font-semibold text-[#124761] dark:text-slate-100">
                 Aucun article pour le moment
               </p>
-              <p className="mt-2 text-sm text-slate-400 max-w-xs">
+              <p className="mt-2 text-sm text-slate-400 dark:text-slate-500 max-w-xs">
                 Les prochaines publications apparaîtront ici.
               </p>
             </div>

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../../tailwind.config.js";
 
 /* ── Aptos font (loads when files are present in public/fonts/) ── */
 @font-face {
@@ -26,6 +27,18 @@
 :root {
   --background: #f7f9fc;
   --foreground: #124761;
+  /* Wave divider fill colors (used by SVG fill attribute) */
+  --wave-bg-light: #f7f9fc;
+  --wave-bg-white: #ffffff;
+  --wave-bg-footer: #124761;
+}
+
+.dark {
+  --background: #0f1e2a;
+  --foreground: #e2eef5;
+  --wave-bg-light: #0f1e2a;
+  --wave-bg-white: #162534;
+  --wave-bg-footer: #124761;
 }
 
 @theme inline {
@@ -52,16 +65,25 @@ body {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
+.dark .article-body h2 {
+  color: #c8e6f5;
+}
 .article-body p {
   color: #475569;
   line-height: 1.8;
   margin-bottom: 1rem;
+}
+.dark .article-body p {
+  color: #94a3b8;
 }
 .article-body ul {
   list-style: disc;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
   color: #475569;
+}
+.dark .article-body ul {
+  color: #94a3b8;
 }
 .article-body li {
   line-height: 1.8;

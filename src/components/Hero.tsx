@@ -208,7 +208,7 @@ export default function Hero() {
 
       {/* ── Wave divider ── */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
-        <WaveDivider fillColor="#f7f9fc" />
+        <WaveDivider fillColor="var(--wave-bg-light)" />
       </div>
     </section>
   );

@@ -51,7 +51,7 @@ export default async function ArticlePage({
           {/* Back link */}
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#00A099] transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-[#00A099] transition-colors mb-10"
           >
             <ArrowLeft size={16} />
             Tous les articles
@@ -63,23 +63,23 @@ export default async function ArticlePage({
               <Tag size={11} />
               {article.category}
             </span>
-            <span className="flex items-center gap-1.5 text-sm text-slate-400">
+            <span className="flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500">
               <Calendar size={14} />
               {formatDate(article.date)}
             </span>
-            <span className="flex items-center gap-1.5 text-sm text-slate-400">
+            <span className="flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500">
               <Clock size={14} />
               {article.readingTime} min de lecture
             </span>
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl lg:text-4xl font-bold text-[#124761] leading-tight mb-6">
+          <h1 className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 leading-tight mb-6">
             {article.title}
           </h1>
 
           {/* Excerpt */}
-          <p className="text-lg text-slate-500 leading-relaxed mb-10 pb-10 border-b border-slate-200">
+          <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-10 pb-10 border-b border-slate-200 dark:border-slate-700">
             {article.excerpt}
           </p>
 
@@ -90,7 +90,7 @@ export default async function ArticlePage({
           />
 
           {/* Footer nav */}
-          <div className="mt-16 pt-10 border-t border-slate-200">
+          <div className="mt-16 pt-10 border-t border-slate-200 dark:border-slate-700">
             <Link
               href="/articles"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#124761] text-white text-sm font-medium rounded-full hover:bg-[#0d3650] transition-colors"

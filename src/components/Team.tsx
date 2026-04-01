@@ -90,7 +90,7 @@ function TeamCard({
       variants={springCard(index)}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-[#00A099]/20 hover:shadow-2xl hover:shadow-[#00A099]/8 transition-all duration-500"
+      className="group bg-white dark:bg-[#1c3144] rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:border-[#00A099]/20 hover:shadow-2xl hover:shadow-[#00A099]/8 transition-all duration-500"
     >
       {/* Card header with photo */}
       <div className={`relative h-52 bg-linear-to-br ${member.color} overflow-hidden`}>
@@ -119,11 +119,11 @@ function TeamCard({
       <div className="p-6">
         {/* Highlights */}
         <div className="flex flex-wrap gap-2 mb-5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#00A099]/8 text-[#00A099] text-xs font-medium rounded-full">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#00A099]/8 dark:bg-[#00A099]/15 text-[#00A099] text-xs font-medium rounded-full">
             <Award size={11} />
             {member.experience}
           </span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#124761]/6 text-[#124761] text-xs font-medium rounded-full">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#124761]/6 dark:bg-slate-700 text-[#124761] dark:text-slate-200 text-xs font-medium rounded-full">
             <Briefcase size={11} />
             {member.specialty}
           </span>
@@ -131,33 +131,33 @@ function TeamCard({
 
         {/* Career timeline */}
         <div className="mb-5">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Parcours</p>
+          <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Parcours</p>
           <div className="space-y-2">
             {member.career.map((c, i) => (
               <div key={i} className="flex gap-3 text-xs">
                 <span className="text-[#00A099] font-semibold shrink-0 w-20">{c.years}</span>
-                <span className="text-slate-500 leading-relaxed">{c.label}</span>
+                <span className="text-slate-500 dark:text-slate-400 leading-relaxed">{c.label}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Contact details */}
-        <div className="space-y-2 pt-4 border-t border-slate-100">
-          <div className="flex items-start gap-2.5 text-xs text-slate-500">
+        <div className="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-700">
+          <div className="flex items-start gap-2.5 text-xs text-slate-500 dark:text-slate-400">
             <MapPin size={13} className="text-slate-400 mt-0.5 shrink-0" />
             <span>{member.address}</span>
           </div>
           <a
             href={`mailto:${member.email}`}
-            className="flex items-center gap-2.5 text-xs text-slate-500 hover:text-[#00A099] transition-colors"
+            className="flex items-center gap-2.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#00A099] transition-colors"
           >
             <Mail size={13} className="text-slate-400 shrink-0" />
             <span className="truncate">{member.email}</span>
           </a>
           <a
             href={`tel:${member.phone.replace(/\s/g, "")}`}
-            className="flex items-center gap-2.5 text-xs text-slate-500 hover:text-[#00A099] transition-colors"
+            className="flex items-center gap-2.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#00A099] transition-colors"
           >
             <Phone size={13} className="text-slate-400 shrink-0" />
             {member.phone}
@@ -165,12 +165,12 @@ function TeamCard({
         </div>
 
         {/* LinkedIn */}
-        <div className="mt-4 pt-4 border-t border-slate-100">
+        <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
           <a
             href="https://www.linkedin.com/company/synoptic-amo"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#00A099] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 hover:text-[#00A099] transition-colors"
           >
             <LinkedinIcon size={13} />
             LinkedIn
@@ -193,7 +193,7 @@ export default function Team() {
   const titleY = useTransform(scrollYProgress, [0, 1], [-12, 12]);
 
   return (
-    <section id="equipe" ref={sectionRef} className="relative bg-white pb-0 pt-24 lg:pt-32">
+    <section id="equipe" ref={sectionRef} className="relative bg-white dark:bg-[#162534] pb-0 pt-24 lg:pt-32">
       {/* Blob accent */}
       <div
         className="absolute top-1/3 -right-24 w-112.5 h-112.5 bg-[#00A099]/5 blur-3xl pointer-events-none"
@@ -215,11 +215,11 @@ export default function Team() {
               <span className="w-8 h-px bg-[#00A099]" />
               Notre équipe
             </motion.div>
-            <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] mb-6 leading-tight">
+            <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-6 leading-tight">
               Une expertise reconnue
               <br />à votre service
             </motion.h2>
-            <motion.p variants={fadeInLeft} className="text-slate-500 leading-relaxed mb-6">
+            <motion.p variants={fadeInLeft} className="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
               SYNOPTIC AMO réunit des programmistes expérimentés qui mettent
               leur savoir-faire au service des maîtres d&apos;ouvrage publics et
               privés, avec réactivité et rigueur.
@@ -234,7 +234,7 @@ export default function Team() {
                 <motion.div
                   key={item}
                   variants={fadeInUp}
-                  className="flex items-center gap-3 text-sm text-slate-600"
+                  className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300"
                 >
                   <div className="w-5 h-5 rounded-full bg-[#00A099]/10 flex items-center justify-center shrink-0">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#00A099]" />
@@ -255,13 +255,13 @@ export default function Team() {
       </div>
 
       {/* Partners carousel */}
-      <div className="mt-20 border-t border-slate-100 pt-14">
+      <div className="mt-20 border-t border-slate-100 dark:border-slate-700 pt-14">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Nos partenaires</p>
+          <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Nos partenaires</p>
         </div>
         <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white dark:from-[#162534] to-transparent z-10 pointer-events-none" />
           <div className="flex animate-marquee" style={{ animationDuration: "30s" }}>
             {[...PARTNERS, ...PARTNERS].map((file, i) => (
               <PartnerLogo key={i} file={file} />
@@ -272,7 +272,7 @@ export default function Team() {
 
       {/* Wave to light bg (Map section) */}
       <div className="mt-14">
-        <WaveDivider fillColor="#f7f9fc" bgColor="white" />
+        <WaveDivider fillColor="var(--wave-bg-light)" bgColor="var(--wave-bg-white)" />
       </div>
     </section>
   );

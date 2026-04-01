@@ -42,7 +42,7 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
       variants={springCard(office.index)}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-[#00A099]/20 hover:shadow-xl hover:shadow-[#00A099]/6 transition-all duration-500"
+      className="group bg-white dark:bg-[#1c3144] rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:border-[#00A099]/20 hover:shadow-xl hover:shadow-[#00A099]/6 transition-all duration-500"
     >
       {/* City hero image */}
       <div className="relative h-48 overflow-hidden">
@@ -78,7 +78,7 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
 
       <div className="p-6">
         <div className="space-y-2.5">
-          <div className="flex items-start gap-2.5 text-sm text-slate-500">
+          <div className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400">
             <MapPin size={14} className="text-slate-400 mt-0.5 shrink-0" />
             <span>
               {office.address}<br />{office.zip}
@@ -86,14 +86,14 @@ function OfficeCard({ office }: { office: (typeof offices)[0] }) {
           </div>
           <a
             href={`mailto:${office.email}`}
-            className="flex items-center gap-2.5 text-sm text-slate-500 hover:text-[#00A099] transition-colors"
+            className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400 hover:text-[#00A099] transition-colors"
           >
             <Mail size={14} className="text-slate-400 shrink-0" />
             <span className="break-all">{office.email}</span>
           </a>
           <a
             href={`tel:${office.phone.replace(/\s/g, "")}`}
-            className="flex items-center gap-2.5 text-sm text-slate-500 hover:text-[#00A099] transition-colors"
+            className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400 hover:text-[#00A099] transition-colors"
           >
             <Phone size={14} className="text-slate-400 shrink-0" />
             {office.phone}
@@ -117,7 +117,7 @@ export default function Contact() {
   const inView = useInView(titleRef, { once: true });
 
   return (
-    <section id="contact" className="relative bg-white pb-0 pt-24 lg:pt-32">
+    <section id="contact" className="relative bg-white dark:bg-[#162534] pb-0 pt-24 lg:pt-32">
       {/* Blob accent */}
       <div
         className="absolute bottom-1/4 -left-24 w-96 h-96 bg-[#124761]/4 blur-3xl pointer-events-none"
@@ -139,11 +139,11 @@ export default function Contact() {
               <span className="w-8 h-px bg-[#00A099]" />
               Contact
             </motion.div>
-            <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] mb-6 leading-tight">
+            <motion.h2 variants={fadeInLeft} className="text-3xl lg:text-4xl font-bold text-[#124761] dark:text-slate-100 mb-6 leading-tight">
               Parlons de
               <br />votre projet
             </motion.h2>
-            <motion.p variants={fadeInLeft} className="text-slate-500 leading-relaxed mb-8">
+            <motion.p variants={fadeInLeft} className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
               Notre équipe est disponible pour répondre à vos questions et vous
               accompagner dans la définition de votre projet. N&apos;hésitez pas
               à nous contacter.
@@ -151,15 +151,15 @@ export default function Contact() {
 
             <motion.div
               variants={fadeInUp}
-              className="bg-[#f7f9fc] rounded-2xl p-5 border border-slate-100"
+              className="bg-[#f7f9fc] dark:bg-[#1c3144] rounded-2xl p-5 border border-slate-100 dark:border-slate-700"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-lg bg-[#00A099]/10 flex items-center justify-center">
                   <Mail size={14} className="text-[#00A099]" />
                 </div>
-                <span className="font-semibold text-[#124761] text-sm">Réponse rapide</span>
+                <span className="font-semibold text-[#124761] dark:text-slate-100 text-sm">Réponse rapide</span>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Nous nous engageons à répondre à toute demande dans les
                 48h ouvrées.
               </p>
@@ -177,7 +177,7 @@ export default function Contact() {
 
       {/* Wave to footer (dark bg) */}
       <div className="mt-20">
-        <WaveDivider fillColor="#124761" bgColor="white" />
+        <WaveDivider fillColor="var(--wave-bg-footer)" bgColor="var(--wave-bg-white)" />
       </div>
     </section>
   );
