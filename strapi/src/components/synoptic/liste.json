@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_synoptic_listes",
+  "info": {
+    "displayName": "liste"
+  },
+  "options": {},
+  "attributes": {
+    "point": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

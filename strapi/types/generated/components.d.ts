@@ -23,6 +23,16 @@ export interface SynopticEtape extends Struct.ComponentSchema {
   };
 }
 
+export interface SynopticListe extends Struct.ComponentSchema {
+  collectionName: 'components_synoptic_listes';
+  info: {
+    displayName: 'liste';
+  };
+  attributes: {
+    point: Schema.Attribute.String;
+  };
+}
+
 export interface SynopticParcours extends Struct.ComponentSchema {
   collectionName: 'components_synoptic_parcours';
   info: {
@@ -39,6 +49,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'synoptic.carrousel': SynopticCarrousel;
       'synoptic.etape': SynopticEtape;
+      'synoptic.liste': SynopticListe;
       'synoptic.parcours': SynopticParcours;
     }
   }

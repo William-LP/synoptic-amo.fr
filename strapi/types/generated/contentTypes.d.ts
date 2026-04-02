@@ -453,7 +453,7 @@ export interface ApiAccueilAccueil extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     Sous_titre: Schema.Attribute.String;
-    Titre: Schema.Attribute.String;
+    Titre: Schema.Attribute.JSON;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -515,6 +515,67 @@ export interface ApiCategorieReferenceCategorieReference
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContactContact extends Struct.SingleTypeSchema {
+  collectionName: 'contacts';
+  info: {
+    displayName: 'Contact';
+    pluralName: 'contacts';
+    singularName: 'contact';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Carte_contenu: Schema.Attribute.String;
+    Carte_titre: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact.contact'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Sous_titre: Schema.Attribute.String;
+    Titre: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEquipeEquipe extends Struct.SingleTypeSchema {
+  collectionName: 'equipes';
+  info: {
+    displayName: 'Equipe';
+    pluralName: 'equipes';
+    singularName: 'equipe';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::equipe.equipe'
+    > &
+      Schema.Attribute.Private;
+    Points: Schema.Attribute.Component<'synoptic.liste', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    Sous_titre: Schema.Attribute.Text;
+    Titre: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -624,6 +685,34 @@ export interface ApiPartenairePartenaire extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiRefRef extends Struct.SingleTypeSchema {
+  collectionName: 'refs';
+  info: {
+    displayName: 'Ref';
+    pluralName: 'refs';
+    singularName: 'ref';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ref.ref'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Sous_titre: Schema.Attribute.String;
+    Sous_titre_2: Schema.Attribute.String;
+    Titre: Schema.Attribute.String;
+    Titre_2: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
   collectionName: 'references';
   info: {
@@ -643,12 +732,15 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Latitude: Schema.Attribute.Decimal;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::reference.reference'
     > &
       Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Longitude: Schema.Attribute.Decimal;
     Maitre_ouvrage: Schema.Attribute.String;
     Nom_operation: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -1174,9 +1266,12 @@ declare module '@strapi/strapi' {
       'api::accueil.accueil': ApiAccueilAccueil;
       'api::agence.agence': ApiAgenceAgence;
       'api::categorie-reference.categorie-reference': ApiCategorieReferenceCategorieReference;
+      'api::contact.contact': ApiContactContact;
+      'api::equipe.equipe': ApiEquipeEquipe;
       'api::membre.membre': ApiMembreMembre;
       'api::mission.mission': ApiMissionMission;
       'api::partenaire.partenaire': ApiPartenairePartenaire;
+      'api::ref.ref': ApiRefRef;
       'api::reference.reference': ApiReferenceReference;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "refs",
+  "info": {
+    "singularName": "ref",
+    "pluralName": "refs",
+    "displayName": "Ref"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Titre": {
+      "type": "string"
+    },
+    "Sous_titre": {
+      "type": "string"
+    },
+    "Titre_2": {
+      "type": "string"
+    },
+    "Sous_titre_2": {
+      "type": "string"
+    }
+  }
+}

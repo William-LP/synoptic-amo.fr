@@ -1,10 +1,10 @@
 {
   "kind": "singleType",
-  "collectionName": "accueils",
+  "collectionName": "equipes",
   "info": {
-    "singularName": "accueil",
-    "pluralName": "accueils",
-    "displayName": "Accueil"
+    "singularName": "equipe",
+    "pluralName": "equipes",
+    "displayName": "Equipe"
   },
   "options": {
     "draftAndPublish": true
@@ -12,14 +12,14 @@
   "pluginOptions": {},
   "attributes": {
     "Titre": {
-      "type": "json"
-    },
-    "Sous_titre": {
       "type": "string"
     },
-    "Carrousel": {
+    "Sous_titre": {
+      "type": "text"
+    },
+    "Points": {
       "type": "component",
-      "component": "synoptic.carrousel",
+      "component": "synoptic.liste",
       "repeatable": true
     }
   }
