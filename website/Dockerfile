@@ -46,6 +46,9 @@ COPY . .
 
 ENV NODE_ENV=production
 
+ARG STRAPI_API_URL
+ENV STRAPI_API_URL=${STRAPI_API_URL}
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.

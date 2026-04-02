@@ -11,6 +11,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/website
+  STRAPI_API_URL: https://synoptic-amo.zapia.fr/api
 
 jobs:
   build-and-push:
@@ -53,3 +54,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: STRAPI_API_URL=${{ env.STRAPI_API_URL }}
