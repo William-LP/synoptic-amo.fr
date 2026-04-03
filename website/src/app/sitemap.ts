@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { fetchActualites } from '@/lib/api'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 const BASE_URL = 'https://synoptic-amo.fr'
 
