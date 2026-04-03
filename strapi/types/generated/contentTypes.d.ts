@@ -462,6 +462,32 @@ export interface ApiAccueilAccueil extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiActuActu extends Struct.SingleTypeSchema {
+  collectionName: 'actus';
+  info: {
+    displayName: 'Actu';
+    pluralName: 'actus';
+    singularName: 'actu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::actu.actu'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Sous_titre: Schema.Attribute.String;
+    Titre: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiActualiteActualite extends Struct.CollectionTypeSchema {
   collectionName: 'actualites';
   info: {
@@ -1345,6 +1371,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::accueil.accueil': ApiAccueilAccueil;
+      'api::actu.actu': ApiActuActu;
       'api::actualite.actualite': ApiActualiteActualite;
       'api::agence.agence': ApiAgenceAgence;
       'api::categorie-reference.categorie-reference': ApiCategorieReferenceCategorieReference;

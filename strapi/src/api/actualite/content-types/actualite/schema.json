@@ -11,9 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Titre": {
-      "type": "string"
-    },
     "Couverture": {
       "type": "media",
       "multiple": false,
@@ -23,6 +20,9 @@
         "videos",
         "audios"
       ]
+    },
+    "Titre": {
+      "type": "string"
     },
     "Contenu": {
       "type": "richtext"
