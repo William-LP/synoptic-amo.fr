@@ -25,9 +25,6 @@
     "Annee": {
       "type": "string"
     },
-    "Surface_metres_carres": {
-      "type": "integer"
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -51,6 +48,9 @@
         "videos",
         "audios"
       ]
+    },
+    "Surface": {
+      "type": "string"
     }
   }
 }
