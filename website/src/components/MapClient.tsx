@@ -53,6 +53,12 @@ export default function MapClient({ references, categories }: MapClientProps) {
   const [pdfLoading, setPdfLoading] = useState(false);
 
   async function openPdf(url: string) {
+    // Mobile browsers (iOS Safari, Android) can't render PDFs in iframes — open in new tab instead
+    const isMobile = typeof window !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.open(url, "_blank", "noopener,noreferrer");
+      return;
+    }
     setPdfLoading(true);
     try {
       const res = await fetch(url);
