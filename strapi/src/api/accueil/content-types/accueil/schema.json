@@ -21,6 +21,12 @@
       "type": "component",
       "component": "synoptic.carrousel",
       "repeatable": true
+    },
+    "linkedin_entreprise": {
+      "type": "string"
+    },
+    "email_entreprise": {
+      "type": "string"
     }
   }
 }
