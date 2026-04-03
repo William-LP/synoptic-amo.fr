@@ -49,6 +49,24 @@ interface MapClientProps {
 
 export default function MapClient({ references, categories }: MapClientProps) {
   const [active, setActive] = useState<string | null>(null);
+  const [activePdf, setActivePdf] = useState<string | null>(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  async function openPdf(url: string) {
+    setPdfLoading(true);
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      setActivePdf(URL.createObjectURL(blob));
+    } finally {
+      setPdfLoading(false);
+    }
+  }
+
+  function closePdf() {
+    if (activePdf) URL.revokeObjectURL(activePdf);
+    setActivePdf(null);
+  }
 
   const catColorMap: Record<string, string> = Object.fromEntries(
     categories.map((cat, i) => [cat.documentId, getCategoryColor(i)])
@@ -59,6 +77,30 @@ export default function MapClient({ references, categories }: MapClientProps) {
 
   return (
     <div>
+      {pdfLoading && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl px-8 py-6 shadow-2xl text-sm text-slate-600">Chargement…</div>
+        </div>
+      )}
+      {activePdf && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={closePdf}
+        >
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl w-[90vw] h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closePdf}
+              className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white shadow text-slate-600 hover:text-slate-900 cursor-pointer"
+            >
+              ✕
+            </button>
+            <iframe src={activePdf} className="w-full h-full border-0" title="Fiche référence" />
+          </div>
+        </div>
+      )}
       {/* ── Filter chips ── */}
       <div className="flex flex-wrap gap-2 mb-5">
         <button
@@ -128,6 +170,9 @@ export default function MapClient({ references, categories }: MapClientProps) {
                           {catLabel}
                         </span>
                       )}
+                      {r.logo && (
+                        <img src={r.logo} alt="" className="h-6 object-contain mb-2 block" />
+                      )}
                       <div className="font-bold text-[#124761] text-sm leading-tight mb-1">
                         {r.nom_operation}
                       </div>
@@ -150,6 +195,14 @@ export default function MapClient({ references, categories }: MapClientProps) {
                           </span>
                         )}
                       </div>
+                      {r.fiche_reference && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); openPdf(r.fiche_reference); }}
+                          className="mt-2 text-xs text-[#00A099] underline font-medium cursor-pointer"
+                        >
+                          Voir plus
+                        </button>
+                      )}
                     </div>
                   </Popup>
                 </Marker>

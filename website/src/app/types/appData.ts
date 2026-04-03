@@ -78,6 +78,7 @@ export type Reference = {
   logo: string;
   latitude: number | null;
   longitude: number | null;
+  fiche_reference: string;
   categorie: CategorieReference | null;
 }
 

@@ -11,10 +11,10 @@ import { useTheme } from "./ThemeProvider";
 
 const links = [
   { label: "Accueil", href: "/#accueil" },
+  { label: "Actualités", href: "/actualites" },
   { label: "Missions", href: "/#missions" },
   { label: "Équipe", href: "/#equipe" },
   { label: "Références", href: "/#references" },
-  { label: "Articles", href: "/articles" },
 ];
 
 export default function Navbar({ linkedinEntreprise }: { linkedinEntreprise?: string | null }) {

@@ -462,6 +462,38 @@ export interface ApiAccueilAccueil extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiActualiteActualite extends Struct.CollectionTypeSchema {
+  collectionName: 'actualites';
+  info: {
+    displayName: 'Actualit\u00E9';
+    pluralName: 'actualites';
+    singularName: 'actualite';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Contenu: Schema.Attribute.RichText;
+    Couverture: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::actualite.actualite'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Titre: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAgenceAgence extends Struct.CollectionTypeSchema {
   collectionName: 'agences';
   info: {
@@ -726,6 +758,8 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Adresse: Schema.Attribute.JSON &
+      Schema.Attribute.CustomField<'plugin::google-maps.location-picker'>;
     Annee: Schema.Attribute.String;
     categorie_reference: Schema.Attribute.Relation<
       'oneToOne',
@@ -734,7 +768,9 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Latitude: Schema.Attribute.Decimal;
+    Fiche_reference: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -742,7 +778,6 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Longitude: Schema.Attribute.Decimal;
     Maitre_ouvrage: Schema.Attribute.String;
     Nom_operation: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -750,7 +785,6 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Ville: Schema.Attribute.String;
   };
 }
 
@@ -841,6 +875,51 @@ export interface PluginContentReleasesReleaseAction
     >;
     type: Schema.Attribute.Enumeration<['publish', 'unpublish']> &
       Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface PluginGoogleMapsConfig extends Struct.SingleTypeSchema {
+  collectionName: 'google_maps_configs';
+  info: {
+    displayName: 'Google Maps Config';
+    pluralName: 'configs';
+    singularName: 'config';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    defaultLatitude: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<''>;
+    defaultLongitude: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<''>;
+    googleMapsKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<''>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::google-maps.config'
+    > &
+      Schema.Attribute.Private;
+    mapId: Schema.Attribute.String & Schema.Attribute.DefaultTo<'DEMO_MAP_ID'>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1266,6 +1345,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::accueil.accueil': ApiAccueilAccueil;
+      'api::actualite.actualite': ApiActualiteActualite;
       'api::agence.agence': ApiAgenceAgence;
       'api::categorie-reference.categorie-reference': ApiCategorieReferenceCategorieReference;
       'api::contact.contact': ApiContactContact;
@@ -1277,6 +1357,7 @@ declare module '@strapi/strapi' {
       'api::reference.reference': ApiReferenceReference;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::google-maps.config': PluginGoogleMapsConfig;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::review-workflows.workflow': PluginReviewWorkflowsWorkflow;
       'plugin::review-workflows.workflow-stage': PluginReviewWorkflowsWorkflowStage;

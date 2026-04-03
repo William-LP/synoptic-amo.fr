@@ -22,9 +22,6 @@
     "Maitre_ouvrage": {
       "type": "string"
     },
-    "Ville": {
-      "type": "string"
-    },
     "Surface_metres_carres": {
       "type": "string"
     },
@@ -41,11 +38,19 @@
         "audios"
       ]
     },
-    "Latitude": {
-      "type": "decimal"
+    "Adresse": {
+      "type": "customField",
+      "customField": "plugin::google-maps.location-picker"
     },
-    "Longitude": {
-      "type": "decimal"
+    "Fiche_reference": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

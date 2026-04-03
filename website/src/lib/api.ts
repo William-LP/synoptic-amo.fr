@@ -41,7 +41,7 @@ export async function fetchAppData(): Promise<AppData> {
     strapiGet("/membres?populate[Photo]=true&populate[Parcours]=true&populate[Agence][populate]=Illustration"),
     strapiGet("/agences?populate=Illustration"),
     strapiGet("/partenaires?populate=Logo"),
-    strapiGet("/references?populate[logo]=true&populate[categorie_reference]=true&pagination[pageSize]=200"),
+    strapiGet("/references?populate[logo]=true&populate[categorie_reference]=true&populate[Fiche_reference]=true&pagination[pageSize]=200"),
     strapiGet("/categorie-references"),
   ]);
 
@@ -140,23 +140,23 @@ export async function fetchAppData(): Promise<AppData> {
       documentId: string;
       Nom_operation: string;
       Maitre_ouvrage: string;
-      Ville: string;
       Surface_metres_carres: string;
       Annee: string;
       logo?: { url?: string };
-      Latitude?: number | null;
-      Longitude?: number | null;
+      Adresse?: { coordinates?: { lat?: number; lng?: number }; components?: { city?: string } };
+      Fiche_reference?: { url?: string };
       categorie_reference?: { documentId: string; Categorie: string } | null;
     }[]).map((r) => ({
       documentId: r.documentId,
       nom_operation: r.Nom_operation ?? "",
       maitre_ouvrage: r.Maitre_ouvrage ?? "",
-      ville: r.Ville ?? "",
+      ville: r.Adresse?.components?.city ?? "",
       surface: r.Surface_metres_carres ?? "",
       annee: r.Annee ?? "",
       logo: resolveMediaUrl(r.logo?.url),
-      latitude: r.Latitude ?? null,
-      longitude: r.Longitude ?? null,
+      latitude: r.Adresse?.coordinates?.lat ?? null,
+      longitude: r.Adresse?.coordinates?.lng ?? null,
+      fiche_reference: resolveMediaUrl(r.Fiche_reference?.url),
       categorie: r.categorie_reference
         ? { documentId: r.categorie_reference.documentId, categorie: r.categorie_reference.Categorie ?? "" }
         : null,

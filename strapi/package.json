@@ -15,9 +15,9 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
+    "@amicaldo/strapi-google-maps": "^3.0.2",
     "@strapi/plugin-users-permissions": "5.40.0",
     "@strapi/strapi": "5.40.0",
-    "@yunusemrejs/drag-drop-content-types-strapi5": "^1.0.11",
     "better-sqlite3": "12.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
