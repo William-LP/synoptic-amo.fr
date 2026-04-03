@@ -126,17 +126,20 @@ function TeamCard({
         </div>
 
         {/* LinkedIn */}
-        <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-          <a
-            href="https://www.linkedin.com/company/synoptic-amo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 hover:text-[#00A099] transition-colors"
-          >
-            <LinkedinIcon size={13} />
-            LinkedIn
-          </a>
-        </div>
+        {member.linkedin && (
+          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+            <a
+              href={member.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 hover:text-[#00A099] transition-colors"
+            >
+              <LinkedinIcon size={13} />
+              LinkedIn
+            </a>
+          </div>
+        )}
+
       </div>
     </motion.div>
   );
