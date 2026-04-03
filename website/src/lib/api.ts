@@ -1,4 +1,5 @@
 import type { AppData } from "@/app/types/appData";
+import type { Article } from "@/lib/articles";
 
 const STRAPI_API_URL = process.env.STRAPI_API_URL;
 
@@ -170,4 +171,67 @@ export async function fetchAppData(): Promise<AppData> {
       categorie: c.Categorie ?? "",
     })),
   };
+}
+
+// ─── Actualités ───────────────────────────────────────────────────────────────
+
+interface StrapiActualite {
+  documentId: string;
+  Titre: string;
+  Contenu: string;
+  publishedAt: string;
+  Couverture?: { url?: string; alternativeText?: string };
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+function extractExcerpt(markdown: string): string {
+  const line = markdown
+    .split("\n")
+    .find(
+      (l) =>
+        l.trim() &&
+        !l.startsWith("#") &&
+        !l.startsWith("!") &&
+        !l.startsWith(">") &&
+        !l.startsWith("|") &&
+        !l.startsWith("-")
+    ) ?? "";
+  const plain = line.replace(/\*\*?|__?|`/g, "").trim();
+  return plain.length > 200 ? plain.slice(0, 200) + "…" : plain;
+}
+
+function estimateReadingTime(text: string): number {
+  return Math.max(1, Math.round(text.trim().split(/\s+/).length / 200));
+}
+
+function mapActualite(item: StrapiActualite): Article {
+  return {
+    slug: slugify(item.Titre),
+    title: item.Titre,
+    excerpt: extractExcerpt(item.Contenu ?? ""),
+    date: item.publishedAt,
+    readingTime: estimateReadingTime(item.Contenu ?? ""),
+    cover: resolveMediaUrl(item.Couverture?.url),
+    body: item.Contenu ?? "",
+  };
+}
+
+export async function fetchActualites(): Promise<Article[]> {
+  const data = await strapiGet("/actualites?populate=Couverture&sort=publishedAt:desc");
+  if (!data) return [];
+  return (data as StrapiActualite[]).map(mapActualite);
+}
+
+export async function fetchActualite(slug: string): Promise<Article | null> {
+  const all = await fetchActualites();
+  return all.find((a) => a.slug === slug) ?? null;
 }

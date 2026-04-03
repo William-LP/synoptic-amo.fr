@@ -3,9 +3,10 @@ export interface Article {
   title: string;
   excerpt: string;
   date: string; // ISO 8601
-  category: string;
-  readingTime: number; // minutes
-  body: string; // HTML
+  category?: string;
+  readingTime?: number; // minutes
+  cover?: string; // image URL
+  body: string; // HTML or markdown
 }
 
 export const articles: Article[] = [

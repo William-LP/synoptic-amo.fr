@@ -1,4 +1,4 @@
-import { articles } from "@/lib/articles";
+import { fetchActualites } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
@@ -9,7 +9,9 @@ export const metadata = {
     "Actualités, retours d'expérience et éclairages techniques sur l'Assistance à Maîtrise d'Ouvrage.",
 };
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const articles = await fetchActualites();
+
   return (
     <>
       <Navbar />
