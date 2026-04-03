@@ -64,7 +64,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar linkedinEntreprise={data.accueil.linkedin_entreprise} />
       <main>
         <Hero titre={data.accueil.titre} slides={heroSlides} sousTitre={data.accueil.sous_titre} />
         <Missions mission={data.mission} />
@@ -76,7 +76,7 @@ export default async function Home() {
         />
         <Contact offices={contactOffices} contactSection={data.contact} />
       </main>
-      <Footer agences={footerAgences} />
+      <Footer agences={footerAgences} linkedinEntreprise={data.accueil.linkedin_entreprise} emailEntreprise={data.accueil.email_entreprise} />
     </>
   );
 }

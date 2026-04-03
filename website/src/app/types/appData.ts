@@ -19,6 +19,8 @@ export type TitrePart = {
 export type Accueil = {
   titre: TitrePart[];
   sous_titre: string;
+  linkedin_entreprise: string | null;
+  email_entreprise: string | null;
   carrousel: {
     image: string;
     alt?: string;

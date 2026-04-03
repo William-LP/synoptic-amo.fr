@@ -49,6 +49,8 @@ export async function fetchAppData(): Promise<AppData> {
     accueil: {
       titre: ((accueil?.Titre ?? []) as { text: string; highlight: boolean }[]),
       sous_titre: accueil?.Sous_titre ?? "",
+      linkedin_entreprise: accueil?.linkedin_entreprise ?? null,
+      email_entreprise: accueil?.email_entreprise ?? null,
       carrousel: ((accueil?.Carrousel ?? []) as { Image?: { url?: string; alternativeText?: string }; Credit?: string }[])
         .map((e) => ({
           image: resolveMediaUrl(e.Image?.url),

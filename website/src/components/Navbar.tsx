@@ -17,7 +17,7 @@ const links = [
   { label: "Articles", href: "/articles" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ linkedinEntreprise }: { linkedinEntreprise?: string | null }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -77,15 +77,17 @@ export default function Navbar() {
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <a
-              href="https://www.linkedin.com/company/synoptic-amo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 rounded-lg bg-[#134A64] transition-colors flex items-center justify-center shrink-0"
-              aria-label="LinkedIn"
-            >
-              <span className="text-white"><LinkedinIcon size={15} /></span>
-            </a>
+            {linkedinEntreprise && (
+              <a
+                href={linkedinEntreprise}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-[#134A64] transition-colors flex items-center justify-center shrink-0"
+                aria-label="LinkedIn"
+              >
+                <span className="text-white"><LinkedinIcon size={15} /></span>
+              </a>
+            )}
             <Link
               href="/#contact"
               className="ml-1 px-5 py-2 bg-[#00A099] text-white text-sm font-medium rounded-full hover:bg-[#008a83] transition-colors shadow-sm"

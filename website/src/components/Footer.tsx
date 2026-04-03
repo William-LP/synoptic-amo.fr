@@ -5,7 +5,7 @@ import type { FooterAgence } from "@/app/types/appData";
 
 
 
-export default function Footer({ agences }: { agences?: FooterAgence[] }) {
+export default function Footer({ agences, linkedinEntreprise, emailEntreprise }: { agences?: FooterAgence[]; linkedinEntreprise?: string | null; emailEntreprise?: string | null }) {
   const year = new Date().getFullYear();
   const displayAgences = agences && agences.length > 0 ? agences : [];
 
@@ -30,22 +30,26 @@ export default function Footer({ agences }: { agences?: FooterAgence[] }) {
               construction et d&apos;aménagement.
             </p>
             <div className="flex items-center gap-3 mt-5">
-              <a
-                href="https://www.linkedin.com/company/synoptic-amo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#00A099] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon size={15} />
-              </a>
-              <a
-                href="mailto:gilles.certain@synoptic-amo.fr"
-                className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#00A099] transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={15} />
-              </a>
+              {linkedinEntreprise && (
+                <a
+                  href={linkedinEntreprise}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#00A099] transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <LinkedinIcon size={15} />
+                </a>
+              )}
+              {emailEntreprise && (
+                <a
+                  href={`mailto:${emailEntreprise}`}
+                  className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#00A099] transition-colors"
+                  aria-label="Email"
+                >
+                  <Mail size={15} />
+                </a>
+              )}
             </div>
           </div>
 
