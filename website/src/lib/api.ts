@@ -173,6 +173,16 @@ export async function fetchAppData(): Promise<AppData> {
   };
 }
 
+// ─── Actu (page header) ───────────────────────────────────────────────────────
+
+export async function fetchActuHeader(): Promise<{ titre: string; sous_titre: string }> {
+  const data = await strapiGet("/actu");
+  return {
+    titre: data?.Titre ?? "",
+    sous_titre: data?.Sous_titre ?? "",
+  };
+}
+
 // ─── Actualités ───────────────────────────────────────────────────────────────
 
 interface StrapiActualite {

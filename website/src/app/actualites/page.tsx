@@ -1,4 +1,4 @@
-import { fetchActualites } from "@/lib/api";
+import { fetchActualites, fetchActuHeader } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default async function ArticlesPage() {
-  const articles = await fetchActualites();
+  const [articles, header] = await Promise.all([fetchActualites(), fetchActuHeader()]);
 
   return (
     <>
@@ -23,11 +23,10 @@ export default async function ArticlesPage() {
               Ressources
             </span>
             <h1 className="text-3xl lg:text-5xl font-bold text-[#124761] dark:text-slate-100 leading-tight">
-              Actualités
+              {header.titre}
             </h1>
             <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
-              Éclairages techniques, retours d&apos;expérience et actualités
-              réglementaires autour de l&apos;Assistance à Maîtrise d&apos;Ouvrage.
+              {header.sous_titre}
             </p>
           </div>
 
