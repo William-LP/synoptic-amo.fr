@@ -807,7 +807,7 @@ export interface ApiReferenceReference extends Struct.CollectionTypeSchema {
     Maitre_ouvrage: Schema.Attribute.String;
     Nom_operation: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    Surface_metres_carres: Schema.Attribute.String;
+    Surface_metres_carres: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

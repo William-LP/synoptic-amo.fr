@@ -22,11 +22,11 @@
     "Maitre_ouvrage": {
       "type": "string"
     },
-    "Surface_metres_carres": {
-      "type": "string"
-    },
     "Annee": {
       "type": "string"
+    },
+    "Surface_metres_carres": {
+      "type": "integer"
     },
     "logo": {
       "type": "media",
