@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Reference, CategorieReference } from "@/app/types/appData";
+
+const PdfModal = dynamic(() => import("./PdfModal"), { ssr: false });
 
 /* ── Deterministic color palette ── */
 const PALETTE = [
@@ -50,29 +53,6 @@ interface MapClientProps {
 export default function MapClient({ references, categories }: MapClientProps) {
   const [active, setActive] = useState<string | null>(null);
   const [activePdf, setActivePdf] = useState<string | null>(null);
-  const [pdfLoading, setPdfLoading] = useState(false);
-
-  async function openPdf(url: string) {
-    // Mobile browsers (iOS Safari, Android) can't render PDFs in iframes — open in new tab instead
-    const isMobile = typeof window !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile) {
-      window.open(url, "_blank", "noopener,noreferrer");
-      return;
-    }
-    setPdfLoading(true);
-    try {
-      const res = await fetch(url);
-      const blob = await res.blob();
-      setActivePdf(URL.createObjectURL(blob));
-    } finally {
-      setPdfLoading(false);
-    }
-  }
-
-  function closePdf() {
-    if (activePdf) URL.revokeObjectURL(activePdf);
-    setActivePdf(null);
-  }
 
   const catColorMap: Record<string, string> = Object.fromEntries(
     categories.map((cat, i) => [cat.documentId, getCategoryColor(i)])
@@ -83,29 +63,8 @@ export default function MapClient({ references, categories }: MapClientProps) {
 
   return (
     <div>
-      {pdfLoading && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl px-8 py-6 shadow-2xl text-sm text-slate-600">Chargement…</div>
-        </div>
-      )}
       {activePdf && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
-          onClick={closePdf}
-        >
-          <div
-            className="relative bg-white rounded-2xl shadow-2xl w-[90vw] h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={closePdf}
-              className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white shadow text-slate-600 hover:text-slate-900 cursor-pointer"
-            >
-              ✕
-            </button>
-            <iframe src={activePdf} className="w-full h-full border-0" title="Fiche référence" />
-          </div>
-        </div>
+        <PdfModal url={activePdf} onClose={() => setActivePdf(null)} />
       )}
       {/* ── Filter chips ── */}
       <div className="flex flex-wrap gap-2 mb-5">
@@ -203,7 +162,7 @@ export default function MapClient({ references, categories }: MapClientProps) {
                       </div>
                       {r.fiche_reference && (
                         <button
-                          onClick={(e) => { e.stopPropagation(); openPdf(r.fiche_reference); }}
+                          onClick={(e) => { e.stopPropagation(); setActivePdf(r.fiche_reference); }}
                           className="mt-2 text-xs text-[#00A099] underline font-medium cursor-pointer"
                         >
                           Voir plus
