@@ -1,15 +1,10 @@
 import { notFound } from "next/navigation";
-import { fetchActualite, fetchActualites } from "@/lib/api";
+import { fetchActualite } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-
-export async function generateStaticParams() {
-  const articles = await fetchActualites();
-  return articles.map((a) => ({ slug: a.slug }));
-}
 
 export async function generateMetadata({
   params,
