@@ -1,13 +1,27 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { fetchAppData } from "@/lib/api";
+import type { FooterAgence } from "@/app/types/appData";
 
 export const metadata: Metadata = {
   title: "Mentions légales — SYNOPTIC AMO",
   description: "Mentions légales du site synoptic-amo.fr",
 };
 
-export default function MentionsLegalesPage() {
+export default async function MentionsLegalesPage() {
+  const data = await fetchAppData();
+
+  const footerAgences: FooterAgence[] = data.agences
+    .filter((agence) => data.membres.some((m) => m.agence.documentId === agence.documentId))
+    .map((agence) => {
+      const membre = data.membres.find((m) => m.agence.documentId === agence.documentId)!;
+      return {
+        ville: agence.ville,
+        adresse: agence.adresse,
+        telephone: membre.telephone,
+      };
+    });
   return (
     <>
       <Navbar />
@@ -112,7 +126,7 @@ export default function MentionsLegalesPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer agences={footerAgences} linkedinEntreprise={data.accueil.linkedin_entreprise} emailEntreprise={data.accueil.email_entreprise} />
     </>
   );
 }
