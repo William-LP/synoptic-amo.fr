@@ -1,11 +1,7 @@
 import type { AppData } from "@/app/types/appData";
 import type { Article } from "@/lib/articles";
 
-const STRAPI_API_URL = process.env.STRAPI_API_URL;
-
-if (!STRAPI_API_URL) {
-  throw new Error("STRAPI_API_URL is not set");
-}
+const STRAPI_API_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337/api";
 
 const STRAPI_MEDIA_BASE = STRAPI_API_URL.replace(/\/api\/?$/, "");
 
