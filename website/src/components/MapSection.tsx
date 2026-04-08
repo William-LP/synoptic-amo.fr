@@ -49,7 +49,9 @@ export default function References({ refSection, references = [], categories = [
   const mapInView = useInView(titleRef, { once: true });
   const clientsInView = useInView(clientsRef, { once: true });
 
-  const logos = references.filter((r) => r.logo);
+  const logos = references
+    .filter((r) => r.logo)
+    .filter((r, i, arr) => arr.findIndex((x) => x.logo === r.logo) === i);
   const half = Math.ceil(logos.length / 2);
   const track1 = logos.length > 0 ? [...logos.slice(0, half), ...logos.slice(0, half)] : [];
   const track2 = logos.length > 0 ? [...logos.slice(half), ...logos.slice(half)] : [];
