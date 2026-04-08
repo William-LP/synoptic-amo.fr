@@ -110,7 +110,7 @@ export default function MapClient({ references, categories }: MapClientProps) {
         ) : (
           <MapContainer
             center={[45.9, 5.4]}
-            zoom={7}
+            zoom={6}
             style={{ height: "520px", width: "100%" }}
             scrollWheelZoom={true}
             zoomControl={false}
