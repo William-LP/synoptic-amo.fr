@@ -1,9 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { stagger, fadeInUp } from "@/lib/animations";
 import WaveDivider from "./WaveDivider";
@@ -37,6 +37,45 @@ function LogoCard({ src, alt }: { src: string; alt?: string }) {
   );
 }
 
+function MarqueeRow({ items, duration, reverse = false, className = "" }: {
+  items: Reference[];
+  duration: number;
+  reverse?: boolean;
+  className?: string;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el || items.length === 0) return;
+
+    const width = el.scrollWidth;
+    const from = reverse ? -width : 0;
+    const to = reverse ? 0 : -width;
+
+    x.set(from);
+    const controls = animate(x, to, {
+      duration,
+      ease: "linear",
+      repeat: Infinity,
+      repeatType: "loop",
+    });
+
+    return () => controls.stop();
+  }, [items.length, duration, reverse, x]);
+
+  return (
+    <div className={`flex overflow-hidden ${className}`}>
+      <motion.div ref={trackRef} className="flex shrink-0" style={{ x }}>
+        {items.map((ref, i) => (
+          <LogoCard key={i} src={ref.logo} alt={ref.maitre_ouvrage} />
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 interface MapSectionProps {
   refSection?: RefSection;
   references?: Reference[];
@@ -53,8 +92,8 @@ export default function References({ refSection, references = [], categories = [
     .filter((r) => r.logo)
     .filter((r, i, arr) => arr.findIndex((x) => x.logo === r.logo) === i);
   const half = Math.ceil(logos.length / 2);
-  const track1 = logos.length > 0 ? [...logos.slice(0, half), ...logos.slice(0, half)] : [];
-  const track2 = logos.length > 0 ? [...logos.slice(half), ...logos.slice(half)] : [];
+  const track1 = logos.slice(0, half);
+  const track2 = logos.slice(half);
 
   return (
     <section id="references" className="relative bg-[#f7f9fc] dark:bg-[#0f1e2a] pb-0 pt-24 lg:pt-32">
@@ -132,24 +171,8 @@ export default function References({ refSection, references = [], categories = [
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#f7f9fc] dark:from-[#0f1e2a] to-transparent z-10 pointer-events-none" />
 
-            <div className="flex overflow-hidden mb-4">
-              <div className="animate-marquee flex shrink-0" style={{ animationDuration: "45s" }}>
-                {track1.map((ref, i) => (
-                  <LogoCard key={`r1-${i}`} src={ref.logo} alt={ref.maitre_ouvrage} />
-                ))}
-              </div>
-            </div>
-
-            <div className="flex overflow-hidden">
-              <div
-                className="animate-marquee flex shrink-0"
-                style={{ animationDirection: "reverse", animationDuration: "50s" }}
-              >
-                {track2.map((ref, i) => (
-                  <LogoCard key={`r2-${i}`} src={ref.logo} alt={ref.maitre_ouvrage} />
-                ))}
-              </div>
-            </div>
+            <MarqueeRow items={track1} duration={45} className="mb-4" />
+            <MarqueeRow items={track2} duration={50} reverse />
           </div>
         )}
 
