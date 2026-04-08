@@ -112,7 +112,7 @@ export default function MapClient({ references, categories }: MapClientProps) {
             center={[45.9, 5.4]}
             zoom={7}
             style={{ height: "520px", width: "100%" }}
-            scrollWheelZoom={false}
+            scrollWheelZoom={true}
             zoomControl={false}
           >
             <ZoomControl position="bottomright" />
