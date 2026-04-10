@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
 
 export const metadata = {
-  title: "Articles — SYNOPTIC AMO",
+  title: "Actualités — SYNOPTIC AMO",
   description:
     "Actualités, retours d'expérience et éclairages techniques sur l'Assistance à Maîtrise d'Ouvrage.",
 };
