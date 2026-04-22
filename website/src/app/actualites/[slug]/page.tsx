@@ -37,8 +37,38 @@ export default async function ArticlePage({
   const article = await fetchActualite(slug);
   if (!article) notFound();
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.excerpt,
+    ...(article.cover && { "image": article.cover }),
+    "datePublished": article.date,
+    "author": {
+      "@type": "Organization",
+      "name": "SYNOPTIC AMO",
+      "url": "https://synoptic-amo.fr",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SYNOPTIC AMO",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://synoptic-amo.fr/img/logo.png",
+      },
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://synoptic-amo.fr/actualites/${slug}`,
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <Navbar />
       <main className="pt-24 pb-20 min-h-screen">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">

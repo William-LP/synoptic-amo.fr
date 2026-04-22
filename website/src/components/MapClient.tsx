@@ -136,7 +136,7 @@ export default function MapClient({ references, categories }: MapClientProps) {
                         </span>
                       )}
                       {r.logo && (
-                        <img src={r.logo} alt="" className="h-6 object-contain mb-2 block" />
+                        <img src={r.logo} alt={r.maitre_ouvrage ?? ""} className="h-6 object-contain mb-2 block" />
                       )}
                       <div className="font-bold text-[#124761] text-sm leading-tight mb-1">
                         {r.nom_operation}

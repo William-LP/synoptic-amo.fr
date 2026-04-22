@@ -62,8 +62,49 @@ export default async function Home() {
       };
     });
 
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "ProfessionalService"],
+    "name": "SYNOPTIC AMO",
+    "url": "https://synoptic-amo.fr",
+    "logo": "https://synoptic-amo.fr/img/logo.png",
+    "email": "contact@synoptic-amo.fr",
+    "description": "SYNOPTIC AMO accompagne les maîtres d'ouvrage publics et privés dans toutes les phases de leurs projets de construction, de la définition des besoins à la livraison.",
+    "areaServed": { "@type": "Country", "name": "France" },
+    "knowsAbout": [
+      "Assistance à Maîtrise d'Ouvrage",
+      "Programmation architecturale",
+      "Conduite d'opération",
+      "Marchés publics",
+      "Construction",
+    ],
+    "location": contactOffices.map((o) => ({
+      "@type": "Place",
+      "name": `SYNOPTIC AMO — ${o.city}`,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": o.address,
+        "addressLocality": o.city,
+        "addressCountry": "FR",
+      },
+    })),
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "contact@synoptic-amo.fr",
+      "availableLanguage": { "@type": "Language", "name": "French" },
+    },
+    ...(data.accueil.linkedin_entreprise && {
+      "sameAs": [data.accueil.linkedin_entreprise],
+    }),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
       <Navbar linkedinEntreprise={data.accueil.linkedin_entreprise} />
       <main>
         <Hero titre={data.accueil.titre} slides={heroSlides} sousTitre={data.accueil.sous_titre} />
