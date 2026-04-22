@@ -25,7 +25,7 @@ export default async function ArticlesPage() {
             <h1 className="text-3xl lg:text-5xl font-bold text-[#124761] dark:text-slate-100 leading-tight">
               {header.titre}
             </h1>
-            <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
+            <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg">
               {header.sous_titre}
             </p>
           </div>
