@@ -26,8 +26,7 @@ export default function Footer({ agences, linkedinEntreprise, emailEntreprise }:
               />
             </div>
             <p className="text-sm text-white/50 leading-relaxed max-w-xs">
-              Assistance à Maîtrise d&apos;Ouvrage pour vos projets de
-              construction et d&apos;aménagement.
+              Assistance à Maîtrise d&apos;Ouvrage en programmation architecturale et fonctionnelle pour des projets de construction et de réhabilitation adaptés à vos usages
             </p>
             <div className="flex items-center gap-3 mt-5">
               {linkedinEntreprise && (

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | SYNOPTIC AMO",
   },
   description:
-    "SYNOPTIC AMO accompagne les maîtres d'ouvrage publics et privés dans toutes les phases de leurs projets de construction, de la définition des besoins à la livraison.",
+    "Assistance à Maîtrise d'Ouvrage et programmation architecturale à Lyon et en Savoie. Accompagnement des collectivités pour leurs projets de construction et d'aménagement",
   keywords: [
     "AMO",
     "assistance à maîtrise d'ouvrage",
